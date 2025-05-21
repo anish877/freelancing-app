@@ -14,15 +14,10 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model Freelancer
+ * Model User
  * 
  */
-export type Freelancer = $Result.DefaultSelection<Prisma.$FreelancerPayload>
-/**
- * Model Client
- * 
- */
-export type Client = $Result.DefaultSelection<Prisma.$ClientPayload>
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
  * Model Message
  * 
@@ -35,14 +30,31 @@ export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
 export type Room = $Result.DefaultSelection<Prisma.$RoomPayload>
 
 /**
+ * Enums
+ */
+export namespace $Enums {
+  export const Role: {
+  FREELANCER: 'FREELANCER',
+  CLIENT: 'CLIENT'
+};
+
+export type Role = (typeof Role)[keyof typeof Role]
+
+}
+
+export type Role = $Enums.Role
+
+export const Role: typeof $Enums.Role
+
+/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Freelancers
- * const freelancers = await prisma.freelancer.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  *
  *
@@ -62,8 +74,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Freelancers
-   * const freelancers = await prisma.freelancer.findMany()
+   * // Fetch zero or more Users
+   * const users = await prisma.user.findMany()
    * ```
    *
    *
@@ -160,24 +172,14 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.freelancer`: Exposes CRUD operations for the **Freelancer** model.
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Freelancers
-    * const freelancers = await prisma.freelancer.findMany()
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
     * ```
     */
-  get freelancer(): Prisma.FreelancerDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.client`: Exposes CRUD operations for the **Client** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Clients
-    * const clients = await prisma.client.findMany()
-    * ```
-    */
-  get client(): Prisma.ClientDelegate<ExtArgs, ClientOptions>;
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.message`: Exposes CRUD operations for the **Message** model.
@@ -638,8 +640,7 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Freelancer: 'Freelancer',
-    Client: 'Client',
+    User: 'User',
     Message: 'Message',
     Room: 'Room'
   };
@@ -660,155 +661,81 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "freelancer" | "client" | "message" | "room"
+      modelProps: "user" | "message" | "room"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      Freelancer: {
-        payload: Prisma.$FreelancerPayload<ExtArgs>
-        fields: Prisma.FreelancerFieldRefs
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.FreelancerFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FreelancerPayload> | null
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.FreelancerFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FreelancerPayload>
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findFirst: {
-            args: Prisma.FreelancerFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FreelancerPayload> | null
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.FreelancerFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FreelancerPayload>
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findMany: {
-            args: Prisma.FreelancerFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FreelancerPayload>[]
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           create: {
-            args: Prisma.FreelancerCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FreelancerPayload>
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           createMany: {
-            args: Prisma.FreelancerCreateManyArgs<ExtArgs>
+            args: Prisma.UserCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.FreelancerCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FreelancerPayload>[]
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           delete: {
-            args: Prisma.FreelancerDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FreelancerPayload>
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           update: {
-            args: Prisma.FreelancerUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FreelancerPayload>
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           deleteMany: {
-            args: Prisma.FreelancerDeleteManyArgs<ExtArgs>
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.FreelancerUpdateManyArgs<ExtArgs>
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.FreelancerUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FreelancerPayload>[]
+            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           upsert: {
-            args: Prisma.FreelancerUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FreelancerPayload>
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           aggregate: {
-            args: Prisma.FreelancerAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateFreelancer>
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
           }
           groupBy: {
-            args: Prisma.FreelancerGroupByArgs<ExtArgs>
-            result: $Utils.Optional<FreelancerGroupByOutputType>[]
+            args: Prisma.UserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
           }
           count: {
-            args: Prisma.FreelancerCountArgs<ExtArgs>
-            result: $Utils.Optional<FreelancerCountAggregateOutputType> | number
-          }
-        }
-      }
-      Client: {
-        payload: Prisma.$ClientPayload<ExtArgs>
-        fields: Prisma.ClientFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.ClientFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.ClientFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
-          }
-          findFirst: {
-            args: Prisma.ClientFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.ClientFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
-          }
-          findMany: {
-            args: Prisma.ClientFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>[]
-          }
-          create: {
-            args: Prisma.ClientCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
-          }
-          createMany: {
-            args: Prisma.ClientCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.ClientCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>[]
-          }
-          delete: {
-            args: Prisma.ClientDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
-          }
-          update: {
-            args: Prisma.ClientUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
-          }
-          deleteMany: {
-            args: Prisma.ClientDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.ClientUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.ClientUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>[]
-          }
-          upsert: {
-            args: Prisma.ClientUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
-          }
-          aggregate: {
-            args: Prisma.ClientAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateClient>
-          }
-          groupBy: {
-            args: Prisma.ClientGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ClientGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.ClientCountArgs<ExtArgs>
-            result: $Utils.Optional<ClientCountAggregateOutputType> | number
+            args: Prisma.UserCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
           }
         }
       }
@@ -1044,8 +971,7 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
-    freelancer?: FreelancerOmit
-    client?: ClientOmit
+    user?: UserOmit
     message?: MessageOmit
     room?: RoomOmit
   }
@@ -1138,63 +1064,41 @@ export namespace Prisma {
 
 
   /**
-   * Count Type FreelancerCountOutputType
+   * Count Type UserCountOutputType
    */
 
-  export type FreelancerCountOutputType = {
-    rooms: number
+  export type UserCountOutputType = {
+    roomsAsFreelancer: number
+    roomsAsClient: number
   }
 
-  export type FreelancerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    rooms?: boolean | FreelancerCountOutputTypeCountRoomsArgs
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    roomsAsFreelancer?: boolean | UserCountOutputTypeCountRoomsAsFreelancerArgs
+    roomsAsClient?: boolean | UserCountOutputTypeCountRoomsAsClientArgs
   }
 
   // Custom InputTypes
   /**
-   * FreelancerCountOutputType without action
+   * UserCountOutputType without action
    */
-  export type FreelancerCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FreelancerCountOutputType
+     * Select specific fields to fetch from the UserCountOutputType
      */
-    select?: FreelancerCountOutputTypeSelect<ExtArgs> | null
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * FreelancerCountOutputType without action
+   * UserCountOutputType without action
    */
-  export type FreelancerCountOutputTypeCountRoomsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountRoomsAsFreelancerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RoomWhereInput
   }
 
-
   /**
-   * Count Type ClientCountOutputType
+   * UserCountOutputType without action
    */
-
-  export type ClientCountOutputType = {
-    rooms: number
-  }
-
-  export type ClientCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    rooms?: boolean | ClientCountOutputTypeCountRoomsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * ClientCountOutputType without action
-   */
-  export type ClientCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ClientCountOutputType
-     */
-    select?: ClientCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * ClientCountOutputType without action
-   */
-  export type ClientCountOutputTypeCountRoomsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountRoomsAsClientArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RoomWhereInput
   }
 
@@ -1235,1450 +1139,385 @@ export namespace Prisma {
    */
 
   /**
-   * Model Freelancer
+   * Model User
    */
 
-  export type AggregateFreelancer = {
-    _count: FreelancerCountAggregateOutputType | null
-    _min: FreelancerMinAggregateOutputType | null
-    _max: FreelancerMaxAggregateOutputType | null
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  export type FreelancerMinAggregateOutputType = {
+  export type UserMinAggregateOutputType = {
     id: string | null
     name: string | null
-    email: string | null
-    bio: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type FreelancerMaxAggregateOutputType = {
-    id: string | null
-    name: string | null
-    email: string | null
-    bio: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type FreelancerCountAggregateOutputType = {
-    id: number
-    name: number
-    email: number
-    bio: number
-    skills: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type FreelancerMinAggregateInputType = {
-    id?: true
-    name?: true
-    email?: true
-    bio?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type FreelancerMaxAggregateInputType = {
-    id?: true
-    name?: true
-    email?: true
-    bio?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type FreelancerCountAggregateInputType = {
-    id?: true
-    name?: true
-    email?: true
-    bio?: true
-    skills?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type FreelancerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Freelancer to aggregate.
-     */
-    where?: FreelancerWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Freelancers to fetch.
-     */
-    orderBy?: FreelancerOrderByWithRelationInput | FreelancerOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: FreelancerWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Freelancers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Freelancers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Freelancers
-    **/
-    _count?: true | FreelancerCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: FreelancerMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: FreelancerMaxAggregateInputType
-  }
-
-  export type GetFreelancerAggregateType<T extends FreelancerAggregateArgs> = {
-        [P in keyof T & keyof AggregateFreelancer]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateFreelancer[P]>
-      : GetScalarType<T[P], AggregateFreelancer[P]>
-  }
-
-
-
-
-  export type FreelancerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: FreelancerWhereInput
-    orderBy?: FreelancerOrderByWithAggregationInput | FreelancerOrderByWithAggregationInput[]
-    by: FreelancerScalarFieldEnum[] | FreelancerScalarFieldEnum
-    having?: FreelancerScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: FreelancerCountAggregateInputType | true
-    _min?: FreelancerMinAggregateInputType
-    _max?: FreelancerMaxAggregateInputType
-  }
-
-  export type FreelancerGroupByOutputType = {
-    id: string
-    name: string
-    email: string
-    bio: string | null
-    skills: string[]
-    createdAt: Date
-    updatedAt: Date
-    _count: FreelancerCountAggregateOutputType | null
-    _min: FreelancerMinAggregateOutputType | null
-    _max: FreelancerMaxAggregateOutputType | null
-  }
-
-  type GetFreelancerGroupByPayload<T extends FreelancerGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<FreelancerGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof FreelancerGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], FreelancerGroupByOutputType[P]>
-            : GetScalarType<T[P], FreelancerGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type FreelancerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    email?: boolean
-    bio?: boolean
-    skills?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    rooms?: boolean | Freelancer$roomsArgs<ExtArgs>
-    _count?: boolean | FreelancerCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["freelancer"]>
-
-  export type FreelancerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    email?: boolean
-    bio?: boolean
-    skills?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["freelancer"]>
-
-  export type FreelancerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    email?: boolean
-    bio?: boolean
-    skills?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["freelancer"]>
-
-  export type FreelancerSelectScalar = {
-    id?: boolean
-    name?: boolean
-    email?: boolean
-    bio?: boolean
-    skills?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type FreelancerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "bio" | "skills" | "createdAt" | "updatedAt", ExtArgs["result"]["freelancer"]>
-  export type FreelancerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    rooms?: boolean | Freelancer$roomsArgs<ExtArgs>
-    _count?: boolean | FreelancerCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type FreelancerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type FreelancerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $FreelancerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Freelancer"
-    objects: {
-      rooms: Prisma.$RoomPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      name: string
-      email: string
-      bio: string | null
-      skills: string[]
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["freelancer"]>
-    composites: {}
-  }
-
-  type FreelancerGetPayload<S extends boolean | null | undefined | FreelancerDefaultArgs> = $Result.GetResult<Prisma.$FreelancerPayload, S>
-
-  type FreelancerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<FreelancerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: FreelancerCountAggregateInputType | true
-    }
-
-  export interface FreelancerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Freelancer'], meta: { name: 'Freelancer' } }
-    /**
-     * Find zero or one Freelancer that matches the filter.
-     * @param {FreelancerFindUniqueArgs} args - Arguments to find a Freelancer
-     * @example
-     * // Get one Freelancer
-     * const freelancer = await prisma.freelancer.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends FreelancerFindUniqueArgs>(args: SelectSubset<T, FreelancerFindUniqueArgs<ExtArgs>>): Prisma__FreelancerClient<$Result.GetResult<Prisma.$FreelancerPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Freelancer that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {FreelancerFindUniqueOrThrowArgs} args - Arguments to find a Freelancer
-     * @example
-     * // Get one Freelancer
-     * const freelancer = await prisma.freelancer.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends FreelancerFindUniqueOrThrowArgs>(args: SelectSubset<T, FreelancerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FreelancerClient<$Result.GetResult<Prisma.$FreelancerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Freelancer that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FreelancerFindFirstArgs} args - Arguments to find a Freelancer
-     * @example
-     * // Get one Freelancer
-     * const freelancer = await prisma.freelancer.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends FreelancerFindFirstArgs>(args?: SelectSubset<T, FreelancerFindFirstArgs<ExtArgs>>): Prisma__FreelancerClient<$Result.GetResult<Prisma.$FreelancerPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Freelancer that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FreelancerFindFirstOrThrowArgs} args - Arguments to find a Freelancer
-     * @example
-     * // Get one Freelancer
-     * const freelancer = await prisma.freelancer.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends FreelancerFindFirstOrThrowArgs>(args?: SelectSubset<T, FreelancerFindFirstOrThrowArgs<ExtArgs>>): Prisma__FreelancerClient<$Result.GetResult<Prisma.$FreelancerPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Freelancers that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FreelancerFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Freelancers
-     * const freelancers = await prisma.freelancer.findMany()
-     * 
-     * // Get first 10 Freelancers
-     * const freelancers = await prisma.freelancer.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const freelancerWithIdOnly = await prisma.freelancer.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends FreelancerFindManyArgs>(args?: SelectSubset<T, FreelancerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FreelancerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Freelancer.
-     * @param {FreelancerCreateArgs} args - Arguments to create a Freelancer.
-     * @example
-     * // Create one Freelancer
-     * const Freelancer = await prisma.freelancer.create({
-     *   data: {
-     *     // ... data to create a Freelancer
-     *   }
-     * })
-     * 
-     */
-    create<T extends FreelancerCreateArgs>(args: SelectSubset<T, FreelancerCreateArgs<ExtArgs>>): Prisma__FreelancerClient<$Result.GetResult<Prisma.$FreelancerPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Freelancers.
-     * @param {FreelancerCreateManyArgs} args - Arguments to create many Freelancers.
-     * @example
-     * // Create many Freelancers
-     * const freelancer = await prisma.freelancer.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends FreelancerCreateManyArgs>(args?: SelectSubset<T, FreelancerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Freelancers and returns the data saved in the database.
-     * @param {FreelancerCreateManyAndReturnArgs} args - Arguments to create many Freelancers.
-     * @example
-     * // Create many Freelancers
-     * const freelancer = await prisma.freelancer.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Freelancers and only return the `id`
-     * const freelancerWithIdOnly = await prisma.freelancer.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends FreelancerCreateManyAndReturnArgs>(args?: SelectSubset<T, FreelancerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FreelancerPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Freelancer.
-     * @param {FreelancerDeleteArgs} args - Arguments to delete one Freelancer.
-     * @example
-     * // Delete one Freelancer
-     * const Freelancer = await prisma.freelancer.delete({
-     *   where: {
-     *     // ... filter to delete one Freelancer
-     *   }
-     * })
-     * 
-     */
-    delete<T extends FreelancerDeleteArgs>(args: SelectSubset<T, FreelancerDeleteArgs<ExtArgs>>): Prisma__FreelancerClient<$Result.GetResult<Prisma.$FreelancerPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Freelancer.
-     * @param {FreelancerUpdateArgs} args - Arguments to update one Freelancer.
-     * @example
-     * // Update one Freelancer
-     * const freelancer = await prisma.freelancer.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends FreelancerUpdateArgs>(args: SelectSubset<T, FreelancerUpdateArgs<ExtArgs>>): Prisma__FreelancerClient<$Result.GetResult<Prisma.$FreelancerPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Freelancers.
-     * @param {FreelancerDeleteManyArgs} args - Arguments to filter Freelancers to delete.
-     * @example
-     * // Delete a few Freelancers
-     * const { count } = await prisma.freelancer.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends FreelancerDeleteManyArgs>(args?: SelectSubset<T, FreelancerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Freelancers.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FreelancerUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Freelancers
-     * const freelancer = await prisma.freelancer.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends FreelancerUpdateManyArgs>(args: SelectSubset<T, FreelancerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Freelancers and returns the data updated in the database.
-     * @param {FreelancerUpdateManyAndReturnArgs} args - Arguments to update many Freelancers.
-     * @example
-     * // Update many Freelancers
-     * const freelancer = await prisma.freelancer.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Freelancers and only return the `id`
-     * const freelancerWithIdOnly = await prisma.freelancer.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends FreelancerUpdateManyAndReturnArgs>(args: SelectSubset<T, FreelancerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FreelancerPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Freelancer.
-     * @param {FreelancerUpsertArgs} args - Arguments to update or create a Freelancer.
-     * @example
-     * // Update or create a Freelancer
-     * const freelancer = await prisma.freelancer.upsert({
-     *   create: {
-     *     // ... data to create a Freelancer
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Freelancer we want to update
-     *   }
-     * })
-     */
-    upsert<T extends FreelancerUpsertArgs>(args: SelectSubset<T, FreelancerUpsertArgs<ExtArgs>>): Prisma__FreelancerClient<$Result.GetResult<Prisma.$FreelancerPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Freelancers.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FreelancerCountArgs} args - Arguments to filter Freelancers to count.
-     * @example
-     * // Count the number of Freelancers
-     * const count = await prisma.freelancer.count({
-     *   where: {
-     *     // ... the filter for the Freelancers we want to count
-     *   }
-     * })
-    **/
-    count<T extends FreelancerCountArgs>(
-      args?: Subset<T, FreelancerCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], FreelancerCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Freelancer.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FreelancerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends FreelancerAggregateArgs>(args: Subset<T, FreelancerAggregateArgs>): Prisma.PrismaPromise<GetFreelancerAggregateType<T>>
-
-    /**
-     * Group by Freelancer.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FreelancerGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends FreelancerGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: FreelancerGroupByArgs['orderBy'] }
-        : { orderBy?: FreelancerGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, FreelancerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFreelancerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Freelancer model
-   */
-  readonly fields: FreelancerFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Freelancer.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__FreelancerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    rooms<T extends Freelancer$roomsArgs<ExtArgs> = {}>(args?: Subset<T, Freelancer$roomsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Freelancer model
-   */
-  interface FreelancerFieldRefs {
-    readonly id: FieldRef<"Freelancer", 'String'>
-    readonly name: FieldRef<"Freelancer", 'String'>
-    readonly email: FieldRef<"Freelancer", 'String'>
-    readonly bio: FieldRef<"Freelancer", 'String'>
-    readonly skills: FieldRef<"Freelancer", 'String[]'>
-    readonly createdAt: FieldRef<"Freelancer", 'DateTime'>
-    readonly updatedAt: FieldRef<"Freelancer", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Freelancer findUnique
-   */
-  export type FreelancerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Freelancer
-     */
-    select?: FreelancerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Freelancer
-     */
-    omit?: FreelancerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: FreelancerInclude<ExtArgs> | null
-    /**
-     * Filter, which Freelancer to fetch.
-     */
-    where: FreelancerWhereUniqueInput
-  }
-
-  /**
-   * Freelancer findUniqueOrThrow
-   */
-  export type FreelancerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Freelancer
-     */
-    select?: FreelancerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Freelancer
-     */
-    omit?: FreelancerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: FreelancerInclude<ExtArgs> | null
-    /**
-     * Filter, which Freelancer to fetch.
-     */
-    where: FreelancerWhereUniqueInput
-  }
-
-  /**
-   * Freelancer findFirst
-   */
-  export type FreelancerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Freelancer
-     */
-    select?: FreelancerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Freelancer
-     */
-    omit?: FreelancerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: FreelancerInclude<ExtArgs> | null
-    /**
-     * Filter, which Freelancer to fetch.
-     */
-    where?: FreelancerWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Freelancers to fetch.
-     */
-    orderBy?: FreelancerOrderByWithRelationInput | FreelancerOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Freelancers.
-     */
-    cursor?: FreelancerWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Freelancers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Freelancers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Freelancers.
-     */
-    distinct?: FreelancerScalarFieldEnum | FreelancerScalarFieldEnum[]
-  }
-
-  /**
-   * Freelancer findFirstOrThrow
-   */
-  export type FreelancerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Freelancer
-     */
-    select?: FreelancerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Freelancer
-     */
-    omit?: FreelancerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: FreelancerInclude<ExtArgs> | null
-    /**
-     * Filter, which Freelancer to fetch.
-     */
-    where?: FreelancerWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Freelancers to fetch.
-     */
-    orderBy?: FreelancerOrderByWithRelationInput | FreelancerOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Freelancers.
-     */
-    cursor?: FreelancerWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Freelancers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Freelancers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Freelancers.
-     */
-    distinct?: FreelancerScalarFieldEnum | FreelancerScalarFieldEnum[]
-  }
-
-  /**
-   * Freelancer findMany
-   */
-  export type FreelancerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Freelancer
-     */
-    select?: FreelancerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Freelancer
-     */
-    omit?: FreelancerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: FreelancerInclude<ExtArgs> | null
-    /**
-     * Filter, which Freelancers to fetch.
-     */
-    where?: FreelancerWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Freelancers to fetch.
-     */
-    orderBy?: FreelancerOrderByWithRelationInput | FreelancerOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Freelancers.
-     */
-    cursor?: FreelancerWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Freelancers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Freelancers.
-     */
-    skip?: number
-    distinct?: FreelancerScalarFieldEnum | FreelancerScalarFieldEnum[]
-  }
-
-  /**
-   * Freelancer create
-   */
-  export type FreelancerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Freelancer
-     */
-    select?: FreelancerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Freelancer
-     */
-    omit?: FreelancerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: FreelancerInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Freelancer.
-     */
-    data: XOR<FreelancerCreateInput, FreelancerUncheckedCreateInput>
-  }
-
-  /**
-   * Freelancer createMany
-   */
-  export type FreelancerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Freelancers.
-     */
-    data: FreelancerCreateManyInput | FreelancerCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Freelancer createManyAndReturn
-   */
-  export type FreelancerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Freelancer
-     */
-    select?: FreelancerSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Freelancer
-     */
-    omit?: FreelancerOmit<ExtArgs> | null
-    /**
-     * The data used to create many Freelancers.
-     */
-    data: FreelancerCreateManyInput | FreelancerCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Freelancer update
-   */
-  export type FreelancerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Freelancer
-     */
-    select?: FreelancerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Freelancer
-     */
-    omit?: FreelancerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: FreelancerInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Freelancer.
-     */
-    data: XOR<FreelancerUpdateInput, FreelancerUncheckedUpdateInput>
-    /**
-     * Choose, which Freelancer to update.
-     */
-    where: FreelancerWhereUniqueInput
-  }
-
-  /**
-   * Freelancer updateMany
-   */
-  export type FreelancerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Freelancers.
-     */
-    data: XOR<FreelancerUpdateManyMutationInput, FreelancerUncheckedUpdateManyInput>
-    /**
-     * Filter which Freelancers to update
-     */
-    where?: FreelancerWhereInput
-    /**
-     * Limit how many Freelancers to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Freelancer updateManyAndReturn
-   */
-  export type FreelancerUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Freelancer
-     */
-    select?: FreelancerSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Freelancer
-     */
-    omit?: FreelancerOmit<ExtArgs> | null
-    /**
-     * The data used to update Freelancers.
-     */
-    data: XOR<FreelancerUpdateManyMutationInput, FreelancerUncheckedUpdateManyInput>
-    /**
-     * Filter which Freelancers to update
-     */
-    where?: FreelancerWhereInput
-    /**
-     * Limit how many Freelancers to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Freelancer upsert
-   */
-  export type FreelancerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Freelancer
-     */
-    select?: FreelancerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Freelancer
-     */
-    omit?: FreelancerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: FreelancerInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Freelancer to update in case it exists.
-     */
-    where: FreelancerWhereUniqueInput
-    /**
-     * In case the Freelancer found by the `where` argument doesn't exist, create a new Freelancer with this data.
-     */
-    create: XOR<FreelancerCreateInput, FreelancerUncheckedCreateInput>
-    /**
-     * In case the Freelancer was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<FreelancerUpdateInput, FreelancerUncheckedUpdateInput>
-  }
-
-  /**
-   * Freelancer delete
-   */
-  export type FreelancerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Freelancer
-     */
-    select?: FreelancerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Freelancer
-     */
-    omit?: FreelancerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: FreelancerInclude<ExtArgs> | null
-    /**
-     * Filter which Freelancer to delete.
-     */
-    where: FreelancerWhereUniqueInput
-  }
-
-  /**
-   * Freelancer deleteMany
-   */
-  export type FreelancerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Freelancers to delete
-     */
-    where?: FreelancerWhereInput
-    /**
-     * Limit how many Freelancers to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Freelancer.rooms
-   */
-  export type Freelancer$roomsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Room
-     */
-    select?: RoomSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Room
-     */
-    omit?: RoomOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RoomInclude<ExtArgs> | null
-    where?: RoomWhereInput
-    orderBy?: RoomOrderByWithRelationInput | RoomOrderByWithRelationInput[]
-    cursor?: RoomWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: RoomScalarFieldEnum | RoomScalarFieldEnum[]
-  }
-
-  /**
-   * Freelancer without action
-   */
-  export type FreelancerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Freelancer
-     */
-    select?: FreelancerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Freelancer
-     */
-    omit?: FreelancerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: FreelancerInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Client
-   */
-
-  export type AggregateClient = {
-    _count: ClientCountAggregateOutputType | null
-    _min: ClientMinAggregateOutputType | null
-    _max: ClientMaxAggregateOutputType | null
-  }
-
-  export type ClientMinAggregateOutputType = {
-    id: string | null
-    name: string | null
+    password: string | null
     email: string | null
     company: string | null
+    role: $Enums.Role | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type ClientMaxAggregateOutputType = {
+  export type UserMaxAggregateOutputType = {
     id: string | null
     name: string | null
+    password: string | null
     email: string | null
     company: string | null
+    role: $Enums.Role | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type ClientCountAggregateOutputType = {
+  export type UserCountAggregateOutputType = {
     id: number
     name: number
+    password: number
     email: number
     company: number
+    role: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
-  export type ClientMinAggregateInputType = {
+  export type UserMinAggregateInputType = {
     id?: true
     name?: true
+    password?: true
     email?: true
     company?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type ClientMaxAggregateInputType = {
+  export type UserMaxAggregateInputType = {
     id?: true
     name?: true
+    password?: true
     email?: true
     company?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type ClientCountAggregateInputType = {
+  export type UserCountAggregateInputType = {
     id?: true
     name?: true
+    password?: true
     email?: true
     company?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
   }
 
-  export type ClientAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Client to aggregate.
+     * Filter which User to aggregate.
      */
-    where?: ClientWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Clients to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ClientWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Clients from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Clients.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Clients
+     * Count returned Users
     **/
-    _count?: true | ClientCountAggregateInputType
+    _count?: true | UserCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ClientMinAggregateInputType
+    _min?: UserMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ClientMaxAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
-  export type GetClientAggregateType<T extends ClientAggregateArgs> = {
-        [P in keyof T & keyof AggregateClient]: P extends '_count' | 'count'
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateClient[P]>
-      : GetScalarType<T[P], AggregateClient[P]>
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
   }
 
 
 
 
-  export type ClientGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ClientWhereInput
-    orderBy?: ClientOrderByWithAggregationInput | ClientOrderByWithAggregationInput[]
-    by: ClientScalarFieldEnum[] | ClientScalarFieldEnum
-    having?: ClientScalarWhereWithAggregatesInput
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: UserScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ClientCountAggregateInputType | true
-    _min?: ClientMinAggregateInputType
-    _max?: ClientMaxAggregateInputType
+    _count?: UserCountAggregateInputType | true
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
-  export type ClientGroupByOutputType = {
+  export type UserGroupByOutputType = {
     id: string
     name: string
+    password: string
     email: string
     company: string | null
+    role: $Enums.Role
     createdAt: Date
     updatedAt: Date
-    _count: ClientCountAggregateOutputType | null
-    _min: ClientMinAggregateOutputType | null
-    _max: ClientMaxAggregateOutputType | null
+    _count: UserCountAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  type GetClientGroupByPayload<T extends ClientGroupByArgs> = Prisma.PrismaPromise<
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ClientGroupByOutputType, T['by']> &
+      PickEnumerable<UserGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ClientGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ClientGroupByOutputType[P]>
-            : GetScalarType<T[P], ClientGroupByOutputType[P]>
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ClientSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    password?: boolean
     email?: boolean
     company?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    rooms?: boolean | Client$roomsArgs<ExtArgs>
-    _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["client"]>
+    roomsAsFreelancer?: boolean | User$roomsAsFreelancerArgs<ExtArgs>
+    roomsAsClient?: boolean | User$roomsAsClientArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user"]>
 
-  export type ClientSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    password?: boolean
     email?: boolean
     company?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-  }, ExtArgs["result"]["client"]>
+  }, ExtArgs["result"]["user"]>
 
-  export type ClientSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    password?: boolean
     email?: boolean
     company?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-  }, ExtArgs["result"]["client"]>
+  }, ExtArgs["result"]["user"]>
 
-  export type ClientSelectScalar = {
+  export type UserSelectScalar = {
     id?: boolean
     name?: boolean
+    password?: boolean
     email?: boolean
     company?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ClientOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "company" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
-  export type ClientInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    rooms?: boolean | Client$roomsArgs<ExtArgs>
-    _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "email" | "company" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    roomsAsFreelancer?: boolean | User$roomsAsFreelancerArgs<ExtArgs>
+    roomsAsClient?: boolean | User$roomsAsClientArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ClientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type ClientIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $ClientPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Client"
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
     objects: {
-      rooms: Prisma.$RoomPayload<ExtArgs>[]
+      roomsAsFreelancer: Prisma.$RoomPayload<ExtArgs>[]
+      roomsAsClient: Prisma.$RoomPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
+      password: string
       email: string
       company: string | null
+      role: $Enums.Role
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["client"]>
+    }, ExtArgs["result"]["user"]>
     composites: {}
   }
 
-  type ClientGetPayload<S extends boolean | null | undefined | ClientDefaultArgs> = $Result.GetResult<Prisma.$ClientPayload, S>
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
 
-  type ClientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ClientFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ClientCountAggregateInputType | true
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCountAggregateInputType | true
     }
 
-  export interface ClientDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Client'], meta: { name: 'Client' } }
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
     /**
-     * Find zero or one Client that matches the filter.
-     * @param {ClientFindUniqueArgs} args - Arguments to find a Client
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
      * @example
-     * // Get one Client
-     * const client = await prisma.client.findUnique({
+     * // Get one User
+     * const user = await prisma.user.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends ClientFindUniqueArgs>(args: SelectSubset<T, ClientFindUniqueArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Client that matches the filter or throw an error with `error.code='P2025'`
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {ClientFindUniqueOrThrowArgs} args - Arguments to find a Client
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
      * @example
-     * // Get one Client
-     * const client = await prisma.client.findUniqueOrThrow({
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends ClientFindUniqueOrThrowArgs>(args: SelectSubset<T, ClientFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Client that matches the filter.
+     * Find the first User that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientFindFirstArgs} args - Arguments to find a Client
+     * @param {UserFindFirstArgs} args - Arguments to find a User
      * @example
-     * // Get one Client
-     * const client = await prisma.client.findFirst({
+     * // Get one User
+     * const user = await prisma.user.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends ClientFindFirstArgs>(args?: SelectSubset<T, ClientFindFirstArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Client that matches the filter or
+     * Find the first User that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientFindFirstOrThrowArgs} args - Arguments to find a Client
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
      * @example
-     * // Get one Client
-     * const client = await prisma.client.findFirstOrThrow({
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends ClientFindFirstOrThrowArgs>(args?: SelectSubset<T, ClientFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Clients that matches the filter.
+     * Find zero or more Users that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Clients
-     * const clients = await prisma.client.findMany()
+     * // Get all Users
+     * const users = await prisma.user.findMany()
      * 
-     * // Get first 10 Clients
-     * const clients = await prisma.client.findMany({ take: 10 })
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const clientWithIdOnly = await prisma.client.findMany({ select: { id: true } })
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends ClientFindManyArgs>(args?: SelectSubset<T, ClientFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Client.
-     * @param {ClientCreateArgs} args - Arguments to create a Client.
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
      * @example
-     * // Create one Client
-     * const Client = await prisma.client.create({
+     * // Create one User
+     * const User = await prisma.user.create({
      *   data: {
-     *     // ... data to create a Client
+     *     // ... data to create a User
      *   }
      * })
      * 
      */
-    create<T extends ClientCreateArgs>(args: SelectSubset<T, ClientCreateArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Clients.
-     * @param {ClientCreateManyArgs} args - Arguments to create many Clients.
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
      * @example
-     * // Create many Clients
-     * const client = await prisma.client.createMany({
+     * // Create many Users
+     * const user = await prisma.user.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends ClientCreateManyArgs>(args?: SelectSubset<T, ClientCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Clients and returns the data saved in the database.
-     * @param {ClientCreateManyAndReturnArgs} args - Arguments to create many Clients.
+     * Create many Users and returns the data saved in the database.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
      * @example
-     * // Create many Clients
-     * const client = await prisma.client.createManyAndReturn({
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Clients and only return the `id`
-     * const clientWithIdOnly = await prisma.client.createManyAndReturn({
+     * // Create many Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -2688,28 +1527,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends ClientCreateManyAndReturnArgs>(args?: SelectSubset<T, ClientCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Client.
-     * @param {ClientDeleteArgs} args - Arguments to delete one Client.
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
      * @example
-     * // Delete one Client
-     * const Client = await prisma.client.delete({
+     * // Delete one User
+     * const User = await prisma.user.delete({
      *   where: {
-     *     // ... filter to delete one Client
+     *     // ... filter to delete one User
      *   }
      * })
      * 
      */
-    delete<T extends ClientDeleteArgs>(args: SelectSubset<T, ClientDeleteArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Client.
-     * @param {ClientUpdateArgs} args - Arguments to update one Client.
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
      * @example
-     * // Update one Client
-     * const client = await prisma.client.update({
+     * // Update one User
+     * const user = await prisma.user.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2719,30 +1558,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends ClientUpdateArgs>(args: SelectSubset<T, ClientUpdateArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Clients.
-     * @param {ClientDeleteManyArgs} args - Arguments to filter Clients to delete.
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
      * @example
-     * // Delete a few Clients
-     * const { count } = await prisma.client.deleteMany({
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends ClientDeleteManyArgs>(args?: SelectSubset<T, ClientDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Clients.
+     * Update zero or more Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Clients
-     * const client = await prisma.client.updateMany({
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2752,14 +1591,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends ClientUpdateManyArgs>(args: SelectSubset<T, ClientUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Clients and returns the data updated in the database.
-     * @param {ClientUpdateManyAndReturnArgs} args - Arguments to update many Clients.
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
      * @example
-     * // Update many Clients
-     * const client = await prisma.client.updateManyAndReturn({
+     * // Update many Users
+     * const user = await prisma.user.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2768,8 +1607,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Clients and only return the `id`
-     * const clientWithIdOnly = await prisma.client.updateManyAndReturn({
+     * // Update zero or more Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -2782,56 +1621,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends ClientUpdateManyAndReturnArgs>(args: SelectSubset<T, ClientUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Client.
-     * @param {ClientUpsertArgs} args - Arguments to update or create a Client.
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
      * @example
-     * // Update or create a Client
-     * const client = await prisma.client.upsert({
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
      *   create: {
-     *     // ... data to create a Client
+     *     // ... data to create a User
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Client we want to update
+     *     // ... the filter for the User we want to update
      *   }
      * })
      */
-    upsert<T extends ClientUpsertArgs>(args: SelectSubset<T, ClientUpsertArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Clients.
+     * Count the number of Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientCountArgs} args - Arguments to filter Clients to count.
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
      * @example
-     * // Count the number of Clients
-     * const count = await prisma.client.count({
+     * // Count the number of Users
+     * const count = await prisma.user.count({
      *   where: {
-     *     // ... the filter for the Clients we want to count
+     *     // ... the filter for the Users we want to count
      *   }
      * })
     **/
-    count<T extends ClientCountArgs>(
-      args?: Subset<T, ClientCountArgs>,
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ClientCountAggregateOutputType>
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Client.
+     * Allows you to perform aggregations operations on a User.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -2851,13 +1690,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ClientAggregateArgs>(args: Subset<T, ClientAggregateArgs>): Prisma.PrismaPromise<GetClientAggregateType<T>>
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
 
     /**
-     * Group by Client.
+     * Group by User.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ClientGroupByArgs} args - Group by arguments.
+     * @param {UserGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -2872,14 +1711,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ClientGroupByArgs,
+      T extends UserGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ClientGroupByArgs['orderBy'] }
-        : { orderBy?: ClientGroupByArgs['orderBy'] },
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -2928,22 +1767,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ClientGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClientGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Client model
+   * Fields of the User model
    */
-  readonly fields: ClientFieldRefs;
+  readonly fields: UserFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Client.
+   * The delegate class that acts as a "Promise-like" for User.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__ClientClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    rooms<T extends Client$roomsArgs<ExtArgs> = {}>(args?: Subset<T, Client$roomsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    roomsAsFreelancer<T extends User$roomsAsFreelancerArgs<ExtArgs> = {}>(args?: Subset<T, User$roomsAsFreelancerArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    roomsAsClient<T extends User$roomsAsClientArgs<ExtArgs> = {}>(args?: Subset<T, User$roomsAsClientArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2970,406 +1810,408 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Client model
+   * Fields of the User model
    */
-  interface ClientFieldRefs {
-    readonly id: FieldRef<"Client", 'String'>
-    readonly name: FieldRef<"Client", 'String'>
-    readonly email: FieldRef<"Client", 'String'>
-    readonly company: FieldRef<"Client", 'String'>
-    readonly createdAt: FieldRef<"Client", 'DateTime'>
-    readonly updatedAt: FieldRef<"Client", 'DateTime'>
+  interface UserFieldRefs {
+    readonly id: FieldRef<"User", 'String'>
+    readonly name: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
+    readonly email: FieldRef<"User", 'String'>
+    readonly company: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'Role'>
+    readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Client findUnique
+   * User findUnique
    */
-  export type ClientFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the User
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the User
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which Client to fetch.
+     * Filter, which User to fetch.
      */
-    where: ClientWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
   /**
-   * Client findUniqueOrThrow
+   * User findUniqueOrThrow
    */
-  export type ClientFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the User
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the User
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which Client to fetch.
+     * Filter, which User to fetch.
      */
-    where: ClientWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
   /**
-   * Client findFirst
+   * User findFirst
    */
-  export type ClientFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the User
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the User
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which Client to fetch.
+     * Filter, which User to fetch.
      */
-    where?: ClientWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Clients to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Clients.
+     * Sets the position for searching for Users.
      */
-    cursor?: ClientWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Clients from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Clients.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Clients.
+     * Filter by unique combinations of Users.
      */
-    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * Client findFirstOrThrow
+   * User findFirstOrThrow
    */
-  export type ClientFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the User
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the User
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which Client to fetch.
+     * Filter, which User to fetch.
      */
-    where?: ClientWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Clients to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Clients.
+     * Sets the position for searching for Users.
      */
-    cursor?: ClientWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Clients from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Clients.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Clients.
+     * Filter by unique combinations of Users.
      */
-    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * Client findMany
+   * User findMany
    */
-  export type ClientFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the User
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the User
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which Clients to fetch.
+     * Filter, which Users to fetch.
      */
-    where?: ClientWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Clients to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Clients.
+     * Sets the position for listing Users.
      */
-    cursor?: ClientWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Clients from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Clients.
+     * Skip the first `n` Users.
      */
     skip?: number
-    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * Client create
+   * User create
    */
-  export type ClientCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the User
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the User
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * The data needed to create a Client.
+     * The data needed to create a User.
      */
-    data: XOR<ClientCreateInput, ClientUncheckedCreateInput>
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
   }
 
   /**
-   * Client createMany
+   * User createMany
    */
-  export type ClientCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Clients.
+     * The data used to create many Users.
      */
-    data: ClientCreateManyInput | ClientCreateManyInput[]
+    data: UserCreateManyInput | UserCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Client createManyAndReturn
+   * User createManyAndReturn
    */
-  export type ClientCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the User
      */
-    select?: ClientSelectCreateManyAndReturn<ExtArgs> | null
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the User
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The data used to create many Clients.
+     * The data used to create many Users.
      */
-    data: ClientCreateManyInput | ClientCreateManyInput[]
+    data: UserCreateManyInput | UserCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Client update
+   * User update
    */
-  export type ClientUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the User
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the User
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * The data needed to update a Client.
+     * The data needed to update a User.
      */
-    data: XOR<ClientUpdateInput, ClientUncheckedUpdateInput>
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
     /**
-     * Choose, which Client to update.
+     * Choose, which User to update.
      */
-    where: ClientWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
   /**
-   * Client updateMany
+   * User updateMany
    */
-  export type ClientUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Clients.
+     * The data used to update Users.
      */
-    data: XOR<ClientUpdateManyMutationInput, ClientUncheckedUpdateManyInput>
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
     /**
-     * Filter which Clients to update
+     * Filter which Users to update
      */
-    where?: ClientWhereInput
+    where?: UserWhereInput
     /**
-     * Limit how many Clients to update.
+     * Limit how many Users to update.
      */
     limit?: number
   }
 
   /**
-   * Client updateManyAndReturn
+   * User updateManyAndReturn
    */
-  export type ClientUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the User
      */
-    select?: ClientSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the User
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
-     * The data used to update Clients.
+     * The data used to update Users.
      */
-    data: XOR<ClientUpdateManyMutationInput, ClientUncheckedUpdateManyInput>
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
     /**
-     * Filter which Clients to update
+     * Filter which Users to update
      */
-    where?: ClientWhereInput
+    where?: UserWhereInput
     /**
-     * Limit how many Clients to update.
+     * Limit how many Users to update.
      */
     limit?: number
   }
 
   /**
-   * Client upsert
+   * User upsert
    */
-  export type ClientUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the User
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the User
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * The filter to search for the Client to update in case it exists.
+     * The filter to search for the User to update in case it exists.
      */
-    where: ClientWhereUniqueInput
+    where: UserWhereUniqueInput
     /**
-     * In case the Client found by the `where` argument doesn't exist, create a new Client with this data.
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
      */
-    create: XOR<ClientCreateInput, ClientUncheckedCreateInput>
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
     /**
-     * In case the Client was found with the provided `where` argument, update it with this data.
+     * In case the User was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ClientUpdateInput, ClientUncheckedUpdateInput>
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
   }
 
   /**
-   * Client delete
+   * User delete
    */
-  export type ClientDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the User
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the User
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter which Client to delete.
+     * Filter which User to delete.
      */
-    where: ClientWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
   /**
-   * Client deleteMany
+   * User deleteMany
    */
-  export type ClientDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Clients to delete
+     * Filter which Users to delete
      */
-    where?: ClientWhereInput
+    where?: UserWhereInput
     /**
-     * Limit how many Clients to delete.
+     * Limit how many Users to delete.
      */
     limit?: number
   }
 
   /**
-   * Client.rooms
+   * User.roomsAsFreelancer
    */
-  export type Client$roomsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$roomsAsFreelancerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Room
      */
@@ -3391,21 +2233,45 @@ export namespace Prisma {
   }
 
   /**
-   * Client without action
+   * User.roomsAsClient
    */
-  export type ClientDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$roomsAsClientArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Client
+     * Select specific fields to fetch from the Room
      */
-    select?: ClientSelect<ExtArgs> | null
+    select?: RoomSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Client
+     * Omit specific fields from the Room
      */
-    omit?: ClientOmit<ExtArgs> | null
+    omit?: RoomOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ClientInclude<ExtArgs> | null
+    include?: RoomInclude<ExtArgs> | null
+    where?: RoomWhereInput
+    orderBy?: RoomOrderByWithRelationInput | RoomOrderByWithRelationInput[]
+    cursor?: RoomWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RoomScalarFieldEnum | RoomScalarFieldEnum[]
+  }
+
+  /**
+   * User without action
+   */
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
   }
 
 
@@ -4631,8 +3497,8 @@ export namespace Prisma {
     clientId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    freelancer?: boolean | FreelancerDefaultArgs<ExtArgs>
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    freelancer?: boolean | UserDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
     messages?: boolean | Room$messagesArgs<ExtArgs>
     _count?: boolean | RoomCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["room"]>
@@ -4643,8 +3509,8 @@ export namespace Prisma {
     clientId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    freelancer?: boolean | FreelancerDefaultArgs<ExtArgs>
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    freelancer?: boolean | UserDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["room"]>
 
   export type RoomSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4653,8 +3519,8 @@ export namespace Prisma {
     clientId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    freelancer?: boolean | FreelancerDefaultArgs<ExtArgs>
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    freelancer?: boolean | UserDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["room"]>
 
   export type RoomSelectScalar = {
@@ -4667,25 +3533,25 @@ export namespace Prisma {
 
   export type RoomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "freelancerId" | "clientId" | "createdAt" | "updatedAt", ExtArgs["result"]["room"]>
   export type RoomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    freelancer?: boolean | FreelancerDefaultArgs<ExtArgs>
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    freelancer?: boolean | UserDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
     messages?: boolean | Room$messagesArgs<ExtArgs>
     _count?: boolean | RoomCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type RoomIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    freelancer?: boolean | FreelancerDefaultArgs<ExtArgs>
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    freelancer?: boolean | UserDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type RoomIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    freelancer?: boolean | FreelancerDefaultArgs<ExtArgs>
-    client?: boolean | ClientDefaultArgs<ExtArgs>
+    freelancer?: boolean | UserDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $RoomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Room"
     objects: {
-      freelancer: Prisma.$FreelancerPayload<ExtArgs>
-      client: Prisma.$ClientPayload<ExtArgs>
+      freelancer: Prisma.$UserPayload<ExtArgs>
+      client: Prisma.$UserPayload<ExtArgs>
       messages: Prisma.$MessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -5088,8 +3954,8 @@ export namespace Prisma {
    */
   export interface Prisma__RoomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    freelancer<T extends FreelancerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FreelancerDefaultArgs<ExtArgs>>): Prisma__FreelancerClient<$Result.GetResult<Prisma.$FreelancerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    client<T extends ClientDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClientDefaultArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    freelancer<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    client<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     messages<T extends Room$messagesArgs<ExtArgs> = {}>(args?: Subset<T, Room$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5577,29 +4443,18 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const FreelancerScalarFieldEnum: {
+  export const UserScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    email: 'email',
-    bio: 'bio',
-    skills: 'skills',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type FreelancerScalarFieldEnum = (typeof FreelancerScalarFieldEnum)[keyof typeof FreelancerScalarFieldEnum]
-
-
-  export const ClientScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
+    password: 'password',
     email: 'email',
     company: 'company',
+    role: 'role',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
-  export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
   export const MessageScalarFieldEnum: {
@@ -5668,6 +4523,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Role'
+   */
+  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+    
+
+
+  /**
+   * Reference to a field of type 'Role[]'
+   */
+  export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -5698,129 +4567,77 @@ export namespace Prisma {
    */
 
 
-  export type FreelancerWhereInput = {
-    AND?: FreelancerWhereInput | FreelancerWhereInput[]
-    OR?: FreelancerWhereInput[]
-    NOT?: FreelancerWhereInput | FreelancerWhereInput[]
-    id?: StringFilter<"Freelancer"> | string
-    name?: StringFilter<"Freelancer"> | string
-    email?: StringFilter<"Freelancer"> | string
-    bio?: StringNullableFilter<"Freelancer"> | string | null
-    skills?: StringNullableListFilter<"Freelancer">
-    createdAt?: DateTimeFilter<"Freelancer"> | Date | string
-    updatedAt?: DateTimeFilter<"Freelancer"> | Date | string
-    rooms?: RoomListRelationFilter
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    id?: StringFilter<"User"> | string
+    name?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
+    company?: StringNullableFilter<"User"> | string | null
+    role?: EnumRoleFilter<"User"> | $Enums.Role
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    roomsAsFreelancer?: RoomListRelationFilter
+    roomsAsClient?: RoomListRelationFilter
   }
 
-  export type FreelancerOrderByWithRelationInput = {
+  export type UserOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    email?: SortOrder
-    bio?: SortOrderInput | SortOrder
-    skills?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    rooms?: RoomOrderByRelationAggregateInput
-  }
-
-  export type FreelancerWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    email?: string
-    AND?: FreelancerWhereInput | FreelancerWhereInput[]
-    OR?: FreelancerWhereInput[]
-    NOT?: FreelancerWhereInput | FreelancerWhereInput[]
-    name?: StringFilter<"Freelancer"> | string
-    bio?: StringNullableFilter<"Freelancer"> | string | null
-    skills?: StringNullableListFilter<"Freelancer">
-    createdAt?: DateTimeFilter<"Freelancer"> | Date | string
-    updatedAt?: DateTimeFilter<"Freelancer"> | Date | string
-    rooms?: RoomListRelationFilter
-  }, "id" | "email">
-
-  export type FreelancerOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    bio?: SortOrderInput | SortOrder
-    skills?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: FreelancerCountOrderByAggregateInput
-    _max?: FreelancerMaxOrderByAggregateInput
-    _min?: FreelancerMinOrderByAggregateInput
-  }
-
-  export type FreelancerScalarWhereWithAggregatesInput = {
-    AND?: FreelancerScalarWhereWithAggregatesInput | FreelancerScalarWhereWithAggregatesInput[]
-    OR?: FreelancerScalarWhereWithAggregatesInput[]
-    NOT?: FreelancerScalarWhereWithAggregatesInput | FreelancerScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Freelancer"> | string
-    name?: StringWithAggregatesFilter<"Freelancer"> | string
-    email?: StringWithAggregatesFilter<"Freelancer"> | string
-    bio?: StringNullableWithAggregatesFilter<"Freelancer"> | string | null
-    skills?: StringNullableListFilter<"Freelancer">
-    createdAt?: DateTimeWithAggregatesFilter<"Freelancer"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Freelancer"> | Date | string
-  }
-
-  export type ClientWhereInput = {
-    AND?: ClientWhereInput | ClientWhereInput[]
-    OR?: ClientWhereInput[]
-    NOT?: ClientWhereInput | ClientWhereInput[]
-    id?: StringFilter<"Client"> | string
-    name?: StringFilter<"Client"> | string
-    email?: StringFilter<"Client"> | string
-    company?: StringNullableFilter<"Client"> | string | null
-    createdAt?: DateTimeFilter<"Client"> | Date | string
-    updatedAt?: DateTimeFilter<"Client"> | Date | string
-    rooms?: RoomListRelationFilter
-  }
-
-  export type ClientOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
+    password?: SortOrder
     email?: SortOrder
     company?: SortOrderInput | SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    rooms?: RoomOrderByRelationAggregateInput
+    roomsAsFreelancer?: RoomOrderByRelationAggregateInput
+    roomsAsClient?: RoomOrderByRelationAggregateInput
   }
 
-  export type ClientWhereUniqueInput = Prisma.AtLeast<{
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
-    AND?: ClientWhereInput | ClientWhereInput[]
-    OR?: ClientWhereInput[]
-    NOT?: ClientWhereInput | ClientWhereInput[]
-    name?: StringFilter<"Client"> | string
-    company?: StringNullableFilter<"Client"> | string | null
-    createdAt?: DateTimeFilter<"Client"> | Date | string
-    updatedAt?: DateTimeFilter<"Client"> | Date | string
-    rooms?: RoomListRelationFilter
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    name?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    company?: StringNullableFilter<"User"> | string | null
+    role?: EnumRoleFilter<"User"> | $Enums.Role
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    roomsAsFreelancer?: RoomListRelationFilter
+    roomsAsClient?: RoomListRelationFilter
   }, "id" | "email">
 
-  export type ClientOrderByWithAggregationInput = {
+  export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    password?: SortOrder
     email?: SortOrder
     company?: SortOrderInput | SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: ClientCountOrderByAggregateInput
-    _max?: ClientMaxOrderByAggregateInput
-    _min?: ClientMinOrderByAggregateInput
+    _count?: UserCountOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
   }
 
-  export type ClientScalarWhereWithAggregatesInput = {
-    AND?: ClientScalarWhereWithAggregatesInput | ClientScalarWhereWithAggregatesInput[]
-    OR?: ClientScalarWhereWithAggregatesInput[]
-    NOT?: ClientScalarWhereWithAggregatesInput | ClientScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Client"> | string
-    name?: StringWithAggregatesFilter<"Client"> | string
-    email?: StringWithAggregatesFilter<"Client"> | string
-    company?: StringNullableWithAggregatesFilter<"Client"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"Client"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Client"> | Date | string
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"User"> | string
+    name?: StringWithAggregatesFilter<"User"> | string
+    password?: StringWithAggregatesFilter<"User"> | string
+    email?: StringWithAggregatesFilter<"User"> | string
+    company?: StringNullableWithAggregatesFilter<"User"> | string | null
+    role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+    createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
   export type MessageWhereInput = {
@@ -5887,8 +4704,8 @@ export namespace Prisma {
     clientId?: StringFilter<"Room"> | string
     createdAt?: DateTimeFilter<"Room"> | Date | string
     updatedAt?: DateTimeFilter<"Room"> | Date | string
-    freelancer?: XOR<FreelancerScalarRelationFilter, FreelancerWhereInput>
-    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+    freelancer?: XOR<UserScalarRelationFilter, UserWhereInput>
+    client?: XOR<UserScalarRelationFilter, UserWhereInput>
     messages?: MessageListRelationFilter
   }
 
@@ -5898,8 +4715,8 @@ export namespace Prisma {
     clientId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    freelancer?: FreelancerOrderByWithRelationInput
-    client?: ClientOrderByWithRelationInput
+    freelancer?: UserOrderByWithRelationInput
+    client?: UserOrderByWithRelationInput
     messages?: MessageOrderByRelationAggregateInput
   }
 
@@ -5912,8 +4729,8 @@ export namespace Prisma {
     clientId?: StringFilter<"Room"> | string
     createdAt?: DateTimeFilter<"Room"> | Date | string
     updatedAt?: DateTimeFilter<"Room"> | Date | string
-    freelancer?: XOR<FreelancerScalarRelationFilter, FreelancerWhereInput>
-    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+    freelancer?: XOR<UserScalarRelationFilter, UserWhereInput>
+    client?: XOR<UserScalarRelationFilter, UserWhereInput>
     messages?: MessageListRelationFilter
   }, "id">
 
@@ -5939,143 +4756,87 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Room"> | Date | string
   }
 
-  export type FreelancerCreateInput = {
+  export type UserCreateInput = {
     id?: string
     name: string
-    email: string
-    bio?: string | null
-    skills?: FreelancerCreateskillsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    rooms?: RoomCreateNestedManyWithoutFreelancerInput
-  }
-
-  export type FreelancerUncheckedCreateInput = {
-    id?: string
-    name: string
-    email: string
-    bio?: string | null
-    skills?: FreelancerCreateskillsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    rooms?: RoomUncheckedCreateNestedManyWithoutFreelancerInput
-  }
-
-  export type FreelancerUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: FreelancerUpdateskillsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rooms?: RoomUpdateManyWithoutFreelancerNestedInput
-  }
-
-  export type FreelancerUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: FreelancerUpdateskillsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rooms?: RoomUncheckedUpdateManyWithoutFreelancerNestedInput
-  }
-
-  export type FreelancerCreateManyInput = {
-    id?: string
-    name: string
-    email: string
-    bio?: string | null
-    skills?: FreelancerCreateskillsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type FreelancerUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: FreelancerUpdateskillsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type FreelancerUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: FreelancerUpdateskillsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ClientCreateInput = {
-    id?: string
-    name: string
+    password: string
     email: string
     company?: string | null
+    role: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
-    rooms?: RoomCreateNestedManyWithoutClientInput
+    roomsAsFreelancer?: RoomCreateNestedManyWithoutFreelancerInput
+    roomsAsClient?: RoomCreateNestedManyWithoutClientInput
   }
 
-  export type ClientUncheckedCreateInput = {
+  export type UserUncheckedCreateInput = {
     id?: string
     name: string
+    password: string
     email: string
     company?: string | null
+    role: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
-    rooms?: RoomUncheckedCreateNestedManyWithoutClientInput
+    roomsAsFreelancer?: RoomUncheckedCreateNestedManyWithoutFreelancerInput
+    roomsAsClient?: RoomUncheckedCreateNestedManyWithoutClientInput
   }
 
-  export type ClientUpdateInput = {
+  export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     company?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rooms?: RoomUpdateManyWithoutClientNestedInput
+    roomsAsFreelancer?: RoomUpdateManyWithoutFreelancerNestedInput
+    roomsAsClient?: RoomUpdateManyWithoutClientNestedInput
   }
 
-  export type ClientUncheckedUpdateInput = {
+  export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     company?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rooms?: RoomUncheckedUpdateManyWithoutClientNestedInput
+    roomsAsFreelancer?: RoomUncheckedUpdateManyWithoutFreelancerNestedInput
+    roomsAsClient?: RoomUncheckedUpdateManyWithoutClientNestedInput
   }
 
-  export type ClientCreateManyInput = {
+  export type UserCreateManyInput = {
     id?: string
     name: string
+    password: string
     email: string
     company?: string | null
+    role: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type ClientUpdateManyMutationInput = {
+  export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     company?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ClientUncheckedUpdateManyInput = {
+  export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     company?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6139,8 +4900,8 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    freelancer: FreelancerCreateNestedOneWithoutRoomsInput
-    client: ClientCreateNestedOneWithoutRoomsInput
+    freelancer: UserCreateNestedOneWithoutRoomsAsFreelancerInput
+    client: UserCreateNestedOneWithoutRoomsAsClientInput
     messages?: MessageCreateNestedManyWithoutRoomInput
   }
 
@@ -6157,8 +4918,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    freelancer?: FreelancerUpdateOneRequiredWithoutRoomsNestedInput
-    client?: ClientUpdateOneRequiredWithoutRoomsNestedInput
+    freelancer?: UserUpdateOneRequiredWithoutRoomsAsFreelancerNestedInput
+    client?: UserUpdateOneRequiredWithoutRoomsAsClientNestedInput
     messages?: MessageUpdateManyWithoutRoomNestedInput
   }
 
@@ -6223,12 +4984,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
+  export type EnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -6257,30 +5017,35 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type FreelancerCountOrderByAggregateInput = {
+  export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    password?: SortOrder
     email?: SortOrder
-    bio?: SortOrder
-    skills?: SortOrder
+    company?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type FreelancerMaxOrderByAggregateInput = {
+  export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    password?: SortOrder
     email?: SortOrder
-    bio?: SortOrder
+    company?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type FreelancerMinOrderByAggregateInput = {
+  export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    password?: SortOrder
     email?: SortOrder
-    bio?: SortOrder
+    company?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6321,6 +5086,16 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -6333,33 +5108,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type ClientCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    company?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type ClientMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    company?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type ClientMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    company?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type RoomScalarRelationFilter = {
@@ -6391,14 +5139,9 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
-  export type FreelancerScalarRelationFilter = {
-    is?: FreelancerWhereInput
-    isNot?: FreelancerWhereInput
-  }
-
-  export type ClientScalarRelationFilter = {
-    is?: ClientWhereInput
-    isNot?: ClientWhereInput
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
   export type MessageListRelationFilter = {
@@ -6435,10 +5178,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type FreelancerCreateskillsInput = {
-    set: string[]
-  }
-
   export type RoomCreateNestedManyWithoutFreelancerInput = {
     create?: XOR<RoomCreateWithoutFreelancerInput, RoomUncheckedCreateWithoutFreelancerInput> | RoomCreateWithoutFreelancerInput[] | RoomUncheckedCreateWithoutFreelancerInput[]
     connectOrCreate?: RoomCreateOrConnectWithoutFreelancerInput | RoomCreateOrConnectWithoutFreelancerInput[]
@@ -6446,10 +5185,24 @@ export namespace Prisma {
     connect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
   }
 
+  export type RoomCreateNestedManyWithoutClientInput = {
+    create?: XOR<RoomCreateWithoutClientInput, RoomUncheckedCreateWithoutClientInput> | RoomCreateWithoutClientInput[] | RoomUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: RoomCreateOrConnectWithoutClientInput | RoomCreateOrConnectWithoutClientInput[]
+    createMany?: RoomCreateManyClientInputEnvelope
+    connect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
+  }
+
   export type RoomUncheckedCreateNestedManyWithoutFreelancerInput = {
     create?: XOR<RoomCreateWithoutFreelancerInput, RoomUncheckedCreateWithoutFreelancerInput> | RoomCreateWithoutFreelancerInput[] | RoomUncheckedCreateWithoutFreelancerInput[]
     connectOrCreate?: RoomCreateOrConnectWithoutFreelancerInput | RoomCreateOrConnectWithoutFreelancerInput[]
     createMany?: RoomCreateManyFreelancerInputEnvelope
+    connect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
+  }
+
+  export type RoomUncheckedCreateNestedManyWithoutClientInput = {
+    create?: XOR<RoomCreateWithoutClientInput, RoomUncheckedCreateWithoutClientInput> | RoomCreateWithoutClientInput[] | RoomUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: RoomCreateOrConnectWithoutClientInput | RoomCreateOrConnectWithoutClientInput[]
+    createMany?: RoomCreateManyClientInputEnvelope
     connect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
   }
 
@@ -6461,9 +5214,8 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type FreelancerUpdateskillsInput = {
-    set?: string[]
-    push?: string | string[]
+  export type EnumRoleFieldUpdateOperationsInput = {
+    set?: $Enums.Role
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -6484,34 +5236,6 @@ export namespace Prisma {
     deleteMany?: RoomScalarWhereInput | RoomScalarWhereInput[]
   }
 
-  export type RoomUncheckedUpdateManyWithoutFreelancerNestedInput = {
-    create?: XOR<RoomCreateWithoutFreelancerInput, RoomUncheckedCreateWithoutFreelancerInput> | RoomCreateWithoutFreelancerInput[] | RoomUncheckedCreateWithoutFreelancerInput[]
-    connectOrCreate?: RoomCreateOrConnectWithoutFreelancerInput | RoomCreateOrConnectWithoutFreelancerInput[]
-    upsert?: RoomUpsertWithWhereUniqueWithoutFreelancerInput | RoomUpsertWithWhereUniqueWithoutFreelancerInput[]
-    createMany?: RoomCreateManyFreelancerInputEnvelope
-    set?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-    disconnect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-    delete?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-    connect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-    update?: RoomUpdateWithWhereUniqueWithoutFreelancerInput | RoomUpdateWithWhereUniqueWithoutFreelancerInput[]
-    updateMany?: RoomUpdateManyWithWhereWithoutFreelancerInput | RoomUpdateManyWithWhereWithoutFreelancerInput[]
-    deleteMany?: RoomScalarWhereInput | RoomScalarWhereInput[]
-  }
-
-  export type RoomCreateNestedManyWithoutClientInput = {
-    create?: XOR<RoomCreateWithoutClientInput, RoomUncheckedCreateWithoutClientInput> | RoomCreateWithoutClientInput[] | RoomUncheckedCreateWithoutClientInput[]
-    connectOrCreate?: RoomCreateOrConnectWithoutClientInput | RoomCreateOrConnectWithoutClientInput[]
-    createMany?: RoomCreateManyClientInputEnvelope
-    connect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-  }
-
-  export type RoomUncheckedCreateNestedManyWithoutClientInput = {
-    create?: XOR<RoomCreateWithoutClientInput, RoomUncheckedCreateWithoutClientInput> | RoomCreateWithoutClientInput[] | RoomUncheckedCreateWithoutClientInput[]
-    connectOrCreate?: RoomCreateOrConnectWithoutClientInput | RoomCreateOrConnectWithoutClientInput[]
-    createMany?: RoomCreateManyClientInputEnvelope
-    connect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
-  }
-
   export type RoomUpdateManyWithoutClientNestedInput = {
     create?: XOR<RoomCreateWithoutClientInput, RoomUncheckedCreateWithoutClientInput> | RoomCreateWithoutClientInput[] | RoomUncheckedCreateWithoutClientInput[]
     connectOrCreate?: RoomCreateOrConnectWithoutClientInput | RoomCreateOrConnectWithoutClientInput[]
@@ -6523,6 +5247,20 @@ export namespace Prisma {
     connect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
     update?: RoomUpdateWithWhereUniqueWithoutClientInput | RoomUpdateWithWhereUniqueWithoutClientInput[]
     updateMany?: RoomUpdateManyWithWhereWithoutClientInput | RoomUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: RoomScalarWhereInput | RoomScalarWhereInput[]
+  }
+
+  export type RoomUncheckedUpdateManyWithoutFreelancerNestedInput = {
+    create?: XOR<RoomCreateWithoutFreelancerInput, RoomUncheckedCreateWithoutFreelancerInput> | RoomCreateWithoutFreelancerInput[] | RoomUncheckedCreateWithoutFreelancerInput[]
+    connectOrCreate?: RoomCreateOrConnectWithoutFreelancerInput | RoomCreateOrConnectWithoutFreelancerInput[]
+    upsert?: RoomUpsertWithWhereUniqueWithoutFreelancerInput | RoomUpsertWithWhereUniqueWithoutFreelancerInput[]
+    createMany?: RoomCreateManyFreelancerInputEnvelope
+    set?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
+    disconnect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
+    delete?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
+    connect?: RoomWhereUniqueInput | RoomWhereUniqueInput[]
+    update?: RoomUpdateWithWhereUniqueWithoutFreelancerInput | RoomUpdateWithWhereUniqueWithoutFreelancerInput[]
+    updateMany?: RoomUpdateManyWithWhereWithoutFreelancerInput | RoomUpdateManyWithWhereWithoutFreelancerInput[]
     deleteMany?: RoomScalarWhereInput | RoomScalarWhereInput[]
   }
 
@@ -6554,16 +5292,16 @@ export namespace Prisma {
     update?: XOR<XOR<RoomUpdateToOneWithWhereWithoutMessagesInput, RoomUpdateWithoutMessagesInput>, RoomUncheckedUpdateWithoutMessagesInput>
   }
 
-  export type FreelancerCreateNestedOneWithoutRoomsInput = {
-    create?: XOR<FreelancerCreateWithoutRoomsInput, FreelancerUncheckedCreateWithoutRoomsInput>
-    connectOrCreate?: FreelancerCreateOrConnectWithoutRoomsInput
-    connect?: FreelancerWhereUniqueInput
+  export type UserCreateNestedOneWithoutRoomsAsFreelancerInput = {
+    create?: XOR<UserCreateWithoutRoomsAsFreelancerInput, UserUncheckedCreateWithoutRoomsAsFreelancerInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRoomsAsFreelancerInput
+    connect?: UserWhereUniqueInput
   }
 
-  export type ClientCreateNestedOneWithoutRoomsInput = {
-    create?: XOR<ClientCreateWithoutRoomsInput, ClientUncheckedCreateWithoutRoomsInput>
-    connectOrCreate?: ClientCreateOrConnectWithoutRoomsInput
-    connect?: ClientWhereUniqueInput
+  export type UserCreateNestedOneWithoutRoomsAsClientInput = {
+    create?: XOR<UserCreateWithoutRoomsAsClientInput, UserUncheckedCreateWithoutRoomsAsClientInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRoomsAsClientInput
+    connect?: UserWhereUniqueInput
   }
 
   export type MessageCreateNestedManyWithoutRoomInput = {
@@ -6580,20 +5318,20 @@ export namespace Prisma {
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
-  export type FreelancerUpdateOneRequiredWithoutRoomsNestedInput = {
-    create?: XOR<FreelancerCreateWithoutRoomsInput, FreelancerUncheckedCreateWithoutRoomsInput>
-    connectOrCreate?: FreelancerCreateOrConnectWithoutRoomsInput
-    upsert?: FreelancerUpsertWithoutRoomsInput
-    connect?: FreelancerWhereUniqueInput
-    update?: XOR<XOR<FreelancerUpdateToOneWithWhereWithoutRoomsInput, FreelancerUpdateWithoutRoomsInput>, FreelancerUncheckedUpdateWithoutRoomsInput>
+  export type UserUpdateOneRequiredWithoutRoomsAsFreelancerNestedInput = {
+    create?: XOR<UserCreateWithoutRoomsAsFreelancerInput, UserUncheckedCreateWithoutRoomsAsFreelancerInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRoomsAsFreelancerInput
+    upsert?: UserUpsertWithoutRoomsAsFreelancerInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRoomsAsFreelancerInput, UserUpdateWithoutRoomsAsFreelancerInput>, UserUncheckedUpdateWithoutRoomsAsFreelancerInput>
   }
 
-  export type ClientUpdateOneRequiredWithoutRoomsNestedInput = {
-    create?: XOR<ClientCreateWithoutRoomsInput, ClientUncheckedCreateWithoutRoomsInput>
-    connectOrCreate?: ClientCreateOrConnectWithoutRoomsInput
-    upsert?: ClientUpsertWithoutRoomsInput
-    connect?: ClientWhereUniqueInput
-    update?: XOR<XOR<ClientUpdateToOneWithWhereWithoutRoomsInput, ClientUpdateWithoutRoomsInput>, ClientUncheckedUpdateWithoutRoomsInput>
+  export type UserUpdateOneRequiredWithoutRoomsAsClientNestedInput = {
+    create?: XOR<UserCreateWithoutRoomsAsClientInput, UserUncheckedCreateWithoutRoomsAsClientInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRoomsAsClientInput
+    upsert?: UserUpsertWithoutRoomsAsClientInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRoomsAsClientInput, UserUpdateWithoutRoomsAsClientInput>, UserUncheckedUpdateWithoutRoomsAsClientInput>
   }
 
   export type MessageUpdateManyWithoutRoomNestedInput = {
@@ -6650,6 +5388,13 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedEnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -6719,6 +5464,16 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -6737,7 +5492,7 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    client: ClientCreateNestedOneWithoutRoomsInput
+    client: UserCreateNestedOneWithoutRoomsAsClientInput
     messages?: MessageCreateNestedManyWithoutRoomInput
   }
 
@@ -6756,6 +5511,32 @@ export namespace Prisma {
 
   export type RoomCreateManyFreelancerInputEnvelope = {
     data: RoomCreateManyFreelancerInput | RoomCreateManyFreelancerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RoomCreateWithoutClientInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    freelancer: UserCreateNestedOneWithoutRoomsAsFreelancerInput
+    messages?: MessageCreateNestedManyWithoutRoomInput
+  }
+
+  export type RoomUncheckedCreateWithoutClientInput = {
+    id?: string
+    freelancerId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: MessageUncheckedCreateNestedManyWithoutRoomInput
+  }
+
+  export type RoomCreateOrConnectWithoutClientInput = {
+    where: RoomWhereUniqueInput
+    create: XOR<RoomCreateWithoutClientInput, RoomUncheckedCreateWithoutClientInput>
+  }
+
+  export type RoomCreateManyClientInputEnvelope = {
+    data: RoomCreateManyClientInput | RoomCreateManyClientInput[]
     skipDuplicates?: boolean
   }
 
@@ -6786,32 +5567,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Room"> | Date | string
   }
 
-  export type RoomCreateWithoutClientInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    freelancer: FreelancerCreateNestedOneWithoutRoomsInput
-    messages?: MessageCreateNestedManyWithoutRoomInput
-  }
-
-  export type RoomUncheckedCreateWithoutClientInput = {
-    id?: string
-    freelancerId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    messages?: MessageUncheckedCreateNestedManyWithoutRoomInput
-  }
-
-  export type RoomCreateOrConnectWithoutClientInput = {
-    where: RoomWhereUniqueInput
-    create: XOR<RoomCreateWithoutClientInput, RoomUncheckedCreateWithoutClientInput>
-  }
-
-  export type RoomCreateManyClientInputEnvelope = {
-    data: RoomCreateManyClientInput | RoomCreateManyClientInput[]
-    skipDuplicates?: boolean
-  }
-
   export type RoomUpsertWithWhereUniqueWithoutClientInput = {
     where: RoomWhereUniqueInput
     update: XOR<RoomUpdateWithoutClientInput, RoomUncheckedUpdateWithoutClientInput>
@@ -6832,8 +5587,8 @@ export namespace Prisma {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    freelancer: FreelancerCreateNestedOneWithoutRoomsInput
-    client: ClientCreateNestedOneWithoutRoomsInput
+    freelancer: UserCreateNestedOneWithoutRoomsAsFreelancerInput
+    client: UserCreateNestedOneWithoutRoomsAsClientInput
   }
 
   export type RoomUncheckedCreateWithoutMessagesInput = {
@@ -6864,8 +5619,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    freelancer?: FreelancerUpdateOneRequiredWithoutRoomsNestedInput
-    client?: ClientUpdateOneRequiredWithoutRoomsNestedInput
+    freelancer?: UserUpdateOneRequiredWithoutRoomsAsFreelancerNestedInput
+    client?: UserUpdateOneRequiredWithoutRoomsAsClientNestedInput
   }
 
   export type RoomUncheckedUpdateWithoutMessagesInput = {
@@ -6876,52 +5631,62 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type FreelancerCreateWithoutRoomsInput = {
+  export type UserCreateWithoutRoomsAsFreelancerInput = {
     id?: string
     name: string
-    email: string
-    bio?: string | null
-    skills?: FreelancerCreateskillsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type FreelancerUncheckedCreateWithoutRoomsInput = {
-    id?: string
-    name: string
-    email: string
-    bio?: string | null
-    skills?: FreelancerCreateskillsInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type FreelancerCreateOrConnectWithoutRoomsInput = {
-    where: FreelancerWhereUniqueInput
-    create: XOR<FreelancerCreateWithoutRoomsInput, FreelancerUncheckedCreateWithoutRoomsInput>
-  }
-
-  export type ClientCreateWithoutRoomsInput = {
-    id?: string
-    name: string
+    password: string
     email: string
     company?: string | null
+    role: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    roomsAsClient?: RoomCreateNestedManyWithoutClientInput
   }
 
-  export type ClientUncheckedCreateWithoutRoomsInput = {
+  export type UserUncheckedCreateWithoutRoomsAsFreelancerInput = {
     id?: string
     name: string
+    password: string
     email: string
     company?: string | null
+    role: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    roomsAsClient?: RoomUncheckedCreateNestedManyWithoutClientInput
   }
 
-  export type ClientCreateOrConnectWithoutRoomsInput = {
-    where: ClientWhereUniqueInput
-    create: XOR<ClientCreateWithoutRoomsInput, ClientUncheckedCreateWithoutRoomsInput>
+  export type UserCreateOrConnectWithoutRoomsAsFreelancerInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRoomsAsFreelancerInput, UserUncheckedCreateWithoutRoomsAsFreelancerInput>
+  }
+
+  export type UserCreateWithoutRoomsAsClientInput = {
+    id?: string
+    name: string
+    password: string
+    email: string
+    company?: string | null
+    role: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roomsAsFreelancer?: RoomCreateNestedManyWithoutFreelancerInput
+  }
+
+  export type UserUncheckedCreateWithoutRoomsAsClientInput = {
+    id?: string
+    name: string
+    password: string
+    email: string
+    company?: string | null
+    role: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roomsAsFreelancer?: RoomUncheckedCreateNestedManyWithoutFreelancerInput
+  }
+
+  export type UserCreateOrConnectWithoutRoomsAsClientInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRoomsAsClientInput, UserUncheckedCreateWithoutRoomsAsClientInput>
   }
 
   export type MessageCreateWithoutRoomInput = {
@@ -6948,64 +5713,74 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type FreelancerUpsertWithoutRoomsInput = {
-    update: XOR<FreelancerUpdateWithoutRoomsInput, FreelancerUncheckedUpdateWithoutRoomsInput>
-    create: XOR<FreelancerCreateWithoutRoomsInput, FreelancerUncheckedCreateWithoutRoomsInput>
-    where?: FreelancerWhereInput
+  export type UserUpsertWithoutRoomsAsFreelancerInput = {
+    update: XOR<UserUpdateWithoutRoomsAsFreelancerInput, UserUncheckedUpdateWithoutRoomsAsFreelancerInput>
+    create: XOR<UserCreateWithoutRoomsAsFreelancerInput, UserUncheckedCreateWithoutRoomsAsFreelancerInput>
+    where?: UserWhereInput
   }
 
-  export type FreelancerUpdateToOneWithWhereWithoutRoomsInput = {
-    where?: FreelancerWhereInput
-    data: XOR<FreelancerUpdateWithoutRoomsInput, FreelancerUncheckedUpdateWithoutRoomsInput>
+  export type UserUpdateToOneWithWhereWithoutRoomsAsFreelancerInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutRoomsAsFreelancerInput, UserUncheckedUpdateWithoutRoomsAsFreelancerInput>
   }
 
-  export type FreelancerUpdateWithoutRoomsInput = {
+  export type UserUpdateWithoutRoomsAsFreelancerInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: FreelancerUpdateskillsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type FreelancerUncheckedUpdateWithoutRoomsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: FreelancerUpdateskillsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ClientUpsertWithoutRoomsInput = {
-    update: XOR<ClientUpdateWithoutRoomsInput, ClientUncheckedUpdateWithoutRoomsInput>
-    create: XOR<ClientCreateWithoutRoomsInput, ClientUncheckedCreateWithoutRoomsInput>
-    where?: ClientWhereInput
-  }
-
-  export type ClientUpdateToOneWithWhereWithoutRoomsInput = {
-    where?: ClientWhereInput
-    data: XOR<ClientUpdateWithoutRoomsInput, ClientUncheckedUpdateWithoutRoomsInput>
-  }
-
-  export type ClientUpdateWithoutRoomsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     company?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roomsAsClient?: RoomUpdateManyWithoutClientNestedInput
   }
 
-  export type ClientUncheckedUpdateWithoutRoomsInput = {
+  export type UserUncheckedUpdateWithoutRoomsAsFreelancerInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     company?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roomsAsClient?: RoomUncheckedUpdateManyWithoutClientNestedInput
+  }
+
+  export type UserUpsertWithoutRoomsAsClientInput = {
+    update: XOR<UserUpdateWithoutRoomsAsClientInput, UserUncheckedUpdateWithoutRoomsAsClientInput>
+    create: XOR<UserCreateWithoutRoomsAsClientInput, UserUncheckedCreateWithoutRoomsAsClientInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutRoomsAsClientInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutRoomsAsClientInput, UserUncheckedUpdateWithoutRoomsAsClientInput>
+  }
+
+  export type UserUpdateWithoutRoomsAsClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roomsAsFreelancer?: RoomUpdateManyWithoutFreelancerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutRoomsAsClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roomsAsFreelancer?: RoomUncheckedUpdateManyWithoutFreelancerNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutRoomInput = {
@@ -7042,11 +5817,18 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type RoomCreateManyClientInput = {
+    id?: string
+    freelancerId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type RoomUpdateWithoutFreelancerInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    client?: ClientUpdateOneRequiredWithoutRoomsNestedInput
+    client?: UserUpdateOneRequiredWithoutRoomsAsClientNestedInput
     messages?: MessageUpdateManyWithoutRoomNestedInput
   }
 
@@ -7065,18 +5847,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoomCreateManyClientInput = {
-    id?: string
-    freelancerId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
   export type RoomUpdateWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    freelancer?: FreelancerUpdateOneRequiredWithoutRoomsNestedInput
+    freelancer?: UserUpdateOneRequiredWithoutRoomsAsFreelancerNestedInput
     messages?: MessageUpdateManyWithoutRoomNestedInput
   }
 

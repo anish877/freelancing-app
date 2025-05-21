@@ -15,25 +15,17 @@ datasource db {
 }
 
 
-model Freelancer {
+model User {
   id                  String             @id @default(uuid())
-  name                String          
-  email               String             @unique
-  bio                 String?         
-  skills              String[]           
-  createdAt           DateTime           @default(now())
-  updatedAt           DateTime           @updatedAt
-  rooms               Room[]             
-}
-
-model Client {
-  id                  String             @id @default(uuid())
-  name                String          
+  name                String         
+  password            String 
   email               String             @unique
   company             String?         
+  role                Role
+  roomsAsFreelancer   Room[]             @relation("freelancer")                   
+  roomsAsClient       Room[]             @relation("client")                   
   createdAt           DateTime           @default(now())
   updatedAt           DateTime           @updatedAt
-  rooms               Room[]              
 }
 
 model Message {
@@ -45,12 +37,17 @@ model Message {
   createdAt           DateTime           @default(now())
 }
 
+enum Role {
+  FREELANCER
+  CLIENT
+}
+
 model Room {
   id                  String             @id @default(uuid())
   freelancerId        String   
   clientId            String
-  freelancer          Freelancer         @relation(fields: [freelancerId], references: [id])
-  client              Client             @relation(fields: [clientId], references: [id])
+  freelancer          User             @relation(fields: [freelancerId], references: [id], name: "freelancer")
+  client              User             @relation(fields: [clientId], references: [id], name: "client")
   messages            Message[]
   createdAt           DateTime           @default(now())
   updatedAt           DateTime           @updatedAt
