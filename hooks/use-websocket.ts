@@ -8,7 +8,7 @@ interface UseWebSocketProps {
   url?: string
 }
 
-export function useWebSocket({ userId, roomId, url = "ws://localhost:5050" }: UseWebSocketProps) {
+export function useWebSocket({ userId, roomId, url = "ws://localhost:8080" }: UseWebSocketProps) {
   const [connected, setConnected] = useState(false)
   const [lastMessage, setLastMessage] = useState<string | null>(null)
   const socketRef = useRef<WebSocket | null>(null)

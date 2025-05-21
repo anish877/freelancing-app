@@ -14,6 +14,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Freelancer {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  bio       String?
+  skills    String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  rooms     Room[]
+}
+
+model Client {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  company   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  rooms     Room[]
+}
+
 model Message {
   id        String   @id @default(uuid())
   roomId    String
@@ -24,10 +45,12 @@ model Message {
 }
 
 model Room {
-  id         String    @id @default(uuid())
-  freelancer String
-  client     String
-  messages   Message[]
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id           String     @id @default(uuid())
+  freelancerId String
+  clientId     String
+  freelancer   Freelancer @relation(fields: [freelancerId], references: [id])
+  client       Client     @relation(fields: [clientId], references: [id])
+  messages     Message[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 }

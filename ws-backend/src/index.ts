@@ -1,7 +1,7 @@
 import { WebSocketServer, WebSocket } from "ws";
 import prisma from "./lib/prisma";
 
-const wss = new WebSocketServer({ port: 5050 });
+const wss = new WebSocketServer({ port: 8080 });
 
 interface Message {
   id: string;
@@ -38,7 +38,7 @@ wss.on("connection", async (ws: WebSocket, request) => {
   console.log("New client connected");
   
   // Parse connection URL to get query parameters
-  const url = new URL(request.url || "", "http://localhost:5050");
+  const url = new URL(request.url || "", "http://localhost:8080");
   const userId = url.searchParams.get("userId");
   const roomId = url.searchParams.get("roomId");
   
@@ -68,7 +68,7 @@ wss.on("connection", async (ws: WebSocket, request) => {
     }
 
     // Check if user is either the client or freelancer for this room
-    if (room.client !== userId && room.freelancer !== userId) {
+    if (room.clientId !== userId && room.freelancerId !== userId) {
       ws.send(JSON.stringify({ 
         type: "error", 
         message: "Unauthorized: You are not a member of this room" 
@@ -82,7 +82,7 @@ wss.on("connection", async (ws: WebSocket, request) => {
       ws,
       userId,
       roomId,
-      userType: userId === room.client ? "client" : "freelancer"
+      userType: userId === room.clientId ? "client" : "freelancer"
     };
     
     clients.set(ws, clientInfo);
@@ -237,8 +237,8 @@ export async function createRoom(freelancerId: string, clientId: string) {
   try {
     const room = await prisma.room.create({
       data: {
-        freelancer: freelancerId,
-        client: clientId
+        freelancerId: freelancerId,
+        clientId: clientId
       }
     });
     return room;
@@ -254,8 +254,8 @@ export async function getRoomsForUser(userId: string) {
     const rooms = await prisma.room.findMany({
       where: {
         OR: [
-          { freelancer: userId },
-          { client: userId }
+          { freelancerId: userId },
+          { clientId: userId }
         ]
       },
       orderBy: {
@@ -269,4 +269,4 @@ export async function getRoomsForUser(userId: string) {
   }
 }
 
-console.log("Chat WebSocket server running at ws://localhost:5050");
+console.log("Chat WebSocket server running at ws://localhost:8080");

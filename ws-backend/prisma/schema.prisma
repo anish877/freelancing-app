@@ -15,20 +15,44 @@ datasource db {
 }
 
 
+model Freelancer {
+  id                  String             @id @default(uuid())
+  name                String          
+  email               String             @unique
+  bio                 String?         
+  skills              String[]           
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  rooms               Room[]             
+}
+
+model Client {
+  id                  String             @id @default(uuid())
+  name                String          
+  email               String             @unique
+  company             String?         
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  rooms               Room[]              
+}
+
 model Message {
-  id        String   @id @default(uuid())
-  roomId    String
-  room      Room     @relation(fields: [roomId], references: [id])
-  sender    String
-  content   String
-  createdAt DateTime @default(now())
+  id                  String             @id @default(uuid())
+  roomId              String
+  room                Room               @relation(fields: [roomId], references: [id])
+  sender              String
+  content             String
+  createdAt           DateTime           @default(now())
 }
 
 model Room {
-  id         String    @id @default(uuid())
-  freelancer String
-  client     String
-  messages   Message[]
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id                  String             @id @default(uuid())
+  freelancerId        String   
+  clientId            String
+  freelancer          Freelancer         @relation(fields: [freelancerId], references: [id])
+  client              Client             @relation(fields: [clientId], references: [id])
+  messages            Message[]
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
 }

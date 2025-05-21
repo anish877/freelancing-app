@@ -120,6 +120,25 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.FreelancerScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  bio: 'bio',
+  skills: 'skills',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ClientScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  company: 'company',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.MessageScalarFieldEnum = {
   id: 'id',
   roomId: 'roomId',
@@ -130,8 +149,8 @@ exports.Prisma.MessageScalarFieldEnum = {
 
 exports.Prisma.RoomScalarFieldEnum = {
   id: 'id',
-  freelancer: 'freelancer',
-  client: 'client',
+  freelancerId: 'freelancerId',
+  clientId: 'clientId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -146,8 +165,15 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
+  Freelancer: 'Freelancer',
+  Client: 'Client',
   Message: 'Message',
   Room: 'Room'
 };
