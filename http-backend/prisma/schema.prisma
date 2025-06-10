@@ -13,43 +13,201 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+ 
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+enum UserRole {
+  CLIENT
+  FREELANCER
+  ADMIN
+}
 
+enum DeveloperType {
+  FRONTEND
+  BACKEND
+  FULLSTACK
+  OTHER
+}
+
+enum PaymentPlan {
+  PLAN_1 // $7.99/hr + 5% equity
+  PLAN_2 // $8.99/hr + 2% equity
+  PLAN_3 // $9.99/hr no equity
+}
+
+enum ProjectStatus {
+  PENDING
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum MessageType {
+  TEXT
+  FILE
+  SYSTEM
+}
 
 model User {
-  id                  String             @id @default(uuid())
-  name                String         
-  password            String 
-  email               String             @unique
-  company             String?         
-  role                Role
-  roomsAsFreelancer   Room[]             @relation("freelancer")                   
-  roomsAsClient       Room[]             @relation("client")                   
-  createdAt           DateTime           @default(now())
-  updatedAt           DateTime           @updatedAt
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  avatar    String?
+  role      UserRole
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Client specific fields
+  companyName String?
+  stripeCustomerId String?
+
+  // Freelancer specific fields
+  bio             String?
+  developerType   DeveloperType?
+  isVetted        Boolean @default(false)
+  hourlyRate      Float?
+  portfolioUrl    String?
+
+  // Relations
+  clientProjects   Project[] @relation("ClientProjects")
+  freelancerProjects Project[] @relation("FreelancerProjects")
+  timeEntries      TimeEntry[]
+  messages         Message[]
+  ndaTemplates     NDATemplate[]
+
+  @@map("users")
+}
+
+model Project {
+  id          String        @id @default(cuid())
+  title       String
+  description String
+  status      ProjectStatus @default(PENDING)
+  paymentPlan PaymentPlan
+  equityPercentage Float?
+  totalBudget Float?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations
+  clientId     String
+  client       User   @relation("ClientProjects", fields: [clientId], references: [id])
+  freelancerId String?
+  freelancer   User?  @relation("FreelancerProjects", fields: [freelancerId], references: [id])
+
+  timeEntries  TimeEntry[]
+  messages     Message[]
+  milestones   Milestone[]
+  ndaTemplate  NDATemplate?
+
+  @@map("projects")
+}
+
+model TimeEntry {
+  id          String   @id @default(cuid())
+  description String?
+  hoursWorked Float
+  hourlyRate  Float
+  totalAmount Float
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  // Relations
+  projectId    String
+  project      Project @relation(fields: [projectId], references: [id])
+  freelancerId String
+  freelancer   User    @relation(fields: [freelancerId], references: [id])
+
+  @@map("time_entries")
 }
 
 model Message {
-  id                  String             @id @default(uuid())
-  roomId              String
-  room                Room               @relation(fields: [roomId], references: [id])
-  sender              String
-  content             String
-  createdAt           DateTime           @default(now())
+  id        String      @id @default(cuid())
+  content   String
+  type      MessageType @default(TEXT)
+  fileUrl   String?
+  createdAt DateTime    @default(now())
+
+  // Relations
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
+  senderId  String
+  sender    User    @relation(fields: [senderId], references: [id])
+
+  @@map("messages")
 }
 
-enum Role {
-  FREELANCER
-  CLIENT
+model Milestone {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  isCompleted Boolean  @default(false)
+  dueDate     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
+
+  @@map("milestones")
 }
 
-model Room {
-  id                  String             @id @default(uuid())
-  freelancerId        String   
-  clientId            String
-  freelancer          User             @relation(fields: [freelancerId], references: [id], name: "freelancer")
-  client              User             @relation(fields: [clientId], references: [id], name: "client")
-  messages            Message[]
-  createdAt           DateTime           @default(now())
-  updatedAt           DateTime           @updatedAt
+model NDATemplate {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
+  // Relations
+  clientId  String  @unique
+  client    User    @relation(fields: [clientId], references: [id])
+  projectId String? @unique
+  project   Project? @relation(fields: [projectId], references: [id])
+
+  @@map("nda_templates")
+}
+
+// For search functionality and AI assistance
+model SearchQuery {
+  id        String   @id @default(cuid())
+  query     String
+  results   Json?    // Store AI processed results
+  createdAt DateTime @default(now())
+
+  @@map("search_queries")
+}
+
+// For admin management of freelancers
+model FreelancerApplication {
+  id             String   @id @default(cuid())
+  email          String
+  name           String
+  bio            String
+  developerType  DeveloperType
+  portfolioUrl   String?
+  resumeUrl      String?
+  isApproved     Boolean  @default(false)
+  isRejected     Boolean  @default(false)
+  adminNotes     String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("freelancer_applications")
+}
+
+// For tracking payment plans and rates
+model PaymentPlanConfig {
+  id               String      @id @default(cuid())
+  planType         PaymentPlan @unique
+  hourlyRate       Float
+  equityPercentage Float?
+  description      String
+  isActive         Boolean     @default(true)
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  @@map("payment_plan_configs")
 }

@@ -122,27 +122,108 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  password: 'password',
   email: 'email',
-  company: 'company',
+  name: 'name',
+  avatar: 'avatar',
   role: 'role',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  companyName: 'companyName',
+  stripeCustomerId: 'stripeCustomerId',
+  bio: 'bio',
+  developerType: 'developerType',
+  isVetted: 'isVetted',
+  hourlyRate: 'hourlyRate',
+  portfolioUrl: 'portfolioUrl'
+};
+
+exports.Prisma.ProjectScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  paymentPlan: 'paymentPlan',
+  equityPercentage: 'equityPercentage',
+  totalBudget: 'totalBudget',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  clientId: 'clientId',
+  freelancerId: 'freelancerId'
+};
+
+exports.Prisma.TimeEntryScalarFieldEnum = {
+  id: 'id',
+  description: 'description',
+  hoursWorked: 'hoursWorked',
+  hourlyRate: 'hourlyRate',
+  totalAmount: 'totalAmount',
+  date: 'date',
+  createdAt: 'createdAt',
+  projectId: 'projectId',
+  freelancerId: 'freelancerId'
 };
 
 exports.Prisma.MessageScalarFieldEnum = {
   id: 'id',
-  roomId: 'roomId',
-  sender: 'sender',
   content: 'content',
+  type: 'type',
+  fileUrl: 'fileUrl',
+  createdAt: 'createdAt',
+  projectId: 'projectId',
+  senderId: 'senderId'
+};
+
+exports.Prisma.MilestoneScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  isCompleted: 'isCompleted',
+  dueDate: 'dueDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  projectId: 'projectId'
+};
+
+exports.Prisma.NDATemplateScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  clientId: 'clientId',
+  projectId: 'projectId'
+};
+
+exports.Prisma.SearchQueryScalarFieldEnum = {
+  id: 'id',
+  query: 'query',
+  results: 'results',
   createdAt: 'createdAt'
 };
 
-exports.Prisma.RoomScalarFieldEnum = {
+exports.Prisma.FreelancerApplicationScalarFieldEnum = {
   id: 'id',
-  freelancerId: 'freelancerId',
-  clientId: 'clientId',
+  email: 'email',
+  name: 'name',
+  bio: 'bio',
+  developerType: 'developerType',
+  portfolioUrl: 'portfolioUrl',
+  resumeUrl: 'resumeUrl',
+  isApproved: 'isApproved',
+  isRejected: 'isRejected',
+  adminNotes: 'adminNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PaymentPlanConfigScalarFieldEnum = {
+  id: 'id',
+  planType: 'planType',
+  hourlyRate: 'hourlyRate',
+  equityPercentage: 'equityPercentage',
+  description: 'description',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -150,6 +231,11 @@ exports.Prisma.RoomScalarFieldEnum = {
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -161,15 +247,54 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.Role = exports.$Enums.Role = {
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+exports.UserRole = exports.$Enums.UserRole = {
+  CLIENT: 'CLIENT',
   FREELANCER: 'FREELANCER',
-  CLIENT: 'CLIENT'
+  ADMIN: 'ADMIN'
+};
+
+exports.DeveloperType = exports.$Enums.DeveloperType = {
+  FRONTEND: 'FRONTEND',
+  BACKEND: 'BACKEND',
+  FULLSTACK: 'FULLSTACK',
+  OTHER: 'OTHER'
+};
+
+exports.ProjectStatus = exports.$Enums.ProjectStatus = {
+  PENDING: 'PENDING',
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+};
+
+exports.PaymentPlan = exports.$Enums.PaymentPlan = {
+  PLAN_1: 'PLAN_1',
+  PLAN_2: 'PLAN_2',
+  PLAN_3: 'PLAN_3'
+};
+
+exports.MessageType = exports.$Enums.MessageType = {
+  TEXT: 'TEXT',
+  FILE: 'FILE',
+  SYSTEM: 'SYSTEM'
 };
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Project: 'Project',
+  TimeEntry: 'TimeEntry',
   Message: 'Message',
-  Room: 'Room'
+  Milestone: 'Milestone',
+  NDATemplate: 'NDATemplate',
+  SearchQuery: 'SearchQuery',
+  FreelancerApplication: 'FreelancerApplication',
+  PaymentPlanConfig: 'PaymentPlanConfig'
 };
 
 /**

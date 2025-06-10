@@ -1,29 +1,36 @@
-import Link from "next/link"
+'use client';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ChevronRight, BarChart2, ImageIcon, Code, Lightbulb, FileText, MoreHorizontal } from "lucide-react"
+import { BarChart2, ImageIcon, Code, Lightbulb, FileText, MoreHorizontal, ArrowUpIcon } from "lucide-react"
+import Navbar from "@/components/layout/navBar" // Adjust path as needed
+import { useState } from "react";
+import AuthApp from "./auth/page";
 
 export default function Home() {
+
+  const [showAuth, setShowAuth] = useState(false);
+  const [authMode, setAuthMode] = useState('login'); // 'login' or 'signup'
+
+  const handleLoginClick = () => {
+    setAuthMode('login');
+    setShowAuth(true);
+  };
+
+  const handleSignupClick = () => {
+    setAuthMode('signup');
+    setShowAuth(true);
+  };
+
+  if (showAuth) {
+    return <AuthApp initialMode={authMode} onBack={() => setShowAuth(false)} />;
+  }
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="border-b py-4 px-6">
-        <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold">
-            futurejob
-          </Link>
-          <div className="flex items-center gap-4">
-            <Button variant="outline" asChild>
-              <Link href="/login">Log in</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/signup">Sign up</Link>
-            </Button>
-            <Button variant="ghost" size="icon" aria-label="Help">
-              <span className="rounded-full border w-6 h-6 flex items-center justify-center">?</span>
-            </Button>
-          </div>
-        </div>
-      </header>
+     <Navbar 
+        brandName="futurejob"
+        onLoginClick={handleLoginClick}
+        onSignupClick={handleSignupClick}
+      />
 
       <main className="flex-1 flex flex-col items-center justify-center px-4">
         <div className="w-full max-w-3xl mx-auto text-center">
@@ -32,13 +39,13 @@ export default function Home() {
           </h1>
 
           <div className="relative mb-8">
-            <Input type="text" placeholder="Ask anything" className="pr-12 py-6 text-lg shadow-lg rounded-full" />
+            <Input type="text" placeholder="Ask anything" className="pr-12 py-8 text-thin shadow-lg rounded-full px-5" />
             <Button
               size="icon"
-              className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full h-10 w-10"
+              className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full h-10 w-10 mx-3"
               aria-label="Search"
             >
-              <ChevronRight className="h-5 w-5" />
+              <ArrowUpIcon className="h-5 w-5" />
             </Button>
           </div>
 
