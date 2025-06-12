@@ -1,8 +1,9 @@
+import { AuthResponse, LoginData, SignupData, User } from "@/types";
+
 // API Service
 const API_BASE_URL = 'http://localhost:3000/api'; // Adjust this to your backend URL
-
 export const apiService = {
-  async signup(userData: any) {
+  async signup(userData: SignupData): Promise<AuthResponse> {
     const response = await fetch(`${API_BASE_URL}/auth/signup`, {
       method: 'POST',
       headers: {
@@ -18,7 +19,7 @@ export const apiService = {
     return data;
   },
 
-  async login(userData: any) {
+  async login(userData: LoginData): Promise<AuthResponse> {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
       headers: {
@@ -34,7 +35,7 @@ export const apiService = {
     return data;
   },
 
-  async getProfile(token: any) {
+  async getProfile(token: string): Promise<User> {
     const response = await fetch(`${API_BASE_URL}/auth/me`, {
       headers: {
         'Authorization': `Bearer ${token}`,

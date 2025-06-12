@@ -2,32 +2,72 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { BarChart2, ImageIcon, Code, Lightbulb, FileText, MoreHorizontal, ArrowUpIcon } from "lucide-react"
-import Navbar from "@/components/layout/navBar" // Adjust path as needed
-import { useState } from "react";
-import AuthApp from "./auth/page";
+import Navbar from "@/components/layout/navBar"
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { tokenManager } from "@/service/tokenService";
+import { apiService } from "@/service/apiService";
 
 export default function Home() {
+  const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [showAuth, setShowAuth] = useState(false);
-  const [authMode, setAuthMode] = useState('login'); // 'login' or 'signup'
+  useEffect(() => {
+    // Check if user is already logged in
+    const checkAuth = async () => {
+      try {
+        const token = tokenManager.getToken();
+        if (token) {
+          const response = await apiService.getProfile(token);
+          if (response.success) {
+            setUser(response.data.user);
+            // Redirect to dashboard if user is logged in
+            router.push('/dashboard');
+            return;
+          } else {
+            tokenManager.removeToken();
+          }
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+        tokenManager.removeToken();
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, [router]);
 
   const handleLoginClick = () => {
-    setAuthMode('login');
-    setShowAuth(true);
+    router.push('/auth/login');
   };
 
   const handleSignupClick = () => {
-    setAuthMode('signup');
-    setShowAuth(true);
+    router.push('/auth/signup');
   };
 
-  if (showAuth) {
-    return <AuthApp initialMode={authMode} />;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navbar 
+          brandName="futurejob"
+          onLoginClick={handleLoginClick}
+          onSignupClick={handleSignupClick}
+        />
+        <main className="flex-1 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+        </main>
+      </div>
+    );
   }
+
   return (
     <div className="min-h-screen flex flex-col">
-     <Navbar 
+      <Navbar 
         brandName="futurejob"
+        user={user}
         onLoginClick={handleLoginClick}
         onSignupClick={handleSignupClick}
       />
