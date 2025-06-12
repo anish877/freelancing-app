@@ -26,15 +26,14 @@ const Navbar: React.FC<UpdatedNavbarProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // If user is passed as prop, use it
     if (propUser !== undefined) {
       setUser(propUser);
       setIsLoading(false);
-    } else {
-      // Otherwise, check auth status
+    } else if (!propUser && isLoading) {
+      // Only check auth status if propUser is not provided and we're still loading
       checkAuthStatus();
     }
-  }, [propUser]);
+  }, [propUser, isLoading]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -53,6 +52,7 @@ const Navbar: React.FC<UpdatedNavbarProps> = ({
   const checkAuthStatus = async (): Promise<void> => {
     try {
       const token = tokenManager.getToken();
+      console.log(token)
       if (token) {
         const userData = await apiService.getProfile(token);
         if (userData.success) {
@@ -73,11 +73,12 @@ const Navbar: React.FC<UpdatedNavbarProps> = ({
 
   const handleLogout = (): void => {
     setIsDropdownOpen(false);
+    tokenManager.removeToken();
+    setUser(null);
+    
     if (onLogout) {
-      onLogout(); // Use parent's logout handler if provided
+      onLogout(); // Call parent's logout handler
     } else {
-      tokenManager.removeToken();
-      setUser(null);
       router.push('/');
     }
   };
@@ -99,10 +100,8 @@ const Navbar: React.FC<UpdatedNavbarProps> = ({
   };
 
   const handleBrandClick = () => {
-    if (user) {
-      router.push('/dashboard'); // Go to dashboard if logged in
-    } else {
-      router.push('/'); // Go to landing page if not logged in
+    if (window.location.pathname !== '/') {
+      router.push('/');
     }
   };
 

@@ -14,31 +14,29 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is already logged in
-    const checkAuth = async () => {
+    const checkAuthStatus = async () => {
       try {
         const token = tokenManager.getToken();
         if (token) {
-          const response = await apiService.getProfile(token);
-          if (response.success) {
-            setUser(response.data.user);
-            // Redirect to dashboard if user is logged in
-            router.push('/dashboard');
-            return;
+          const userData = await apiService.getProfile(token);
+          if (userData.success) {
+            setUser(userData.data.user);
           } else {
             tokenManager.removeToken();
+            setUser(null);
           }
         }
       } catch (error) {
         console.error('Auth check failed:', error);
         tokenManager.removeToken();
+        setUser(null);
       } finally {
         setIsLoading(false);
       }
     };
 
-    checkAuth();
-  }, [router]);
+    checkAuthStatus();
+  }, []);
 
   const handleLoginClick = () => {
     router.push('/auth/login');
@@ -48,20 +46,11 @@ export default function Home() {
     router.push('/auth/signup');
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Navbar 
-          brandName="futurejob"
-          onLoginClick={handleLoginClick}
-          onSignupClick={handleSignupClick}
-        />
-        <main className="flex-1 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-        </main>
-      </div>
-    );
-  }
+  const handleLogout = () => {
+    tokenManager.removeToken();
+    setUser(null);
+    // Stay on the same page (home)
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -70,6 +59,7 @@ export default function Home() {
         user={user}
         onLoginClick={handleLoginClick}
         onSignupClick={handleSignupClick}
+        onLogout={handleLogout}
       />
 
       <main className="flex-1 flex flex-col items-center justify-center px-4">

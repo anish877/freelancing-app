@@ -21,12 +21,12 @@ const AuthApp = ({ initialMode = 'signup' }) => {
     if (token) {
       // Verify token and get user data
       apiService.getProfile(token)
-        .then(response => {
-          if (response.success) {
-            setUser(response.data.user);
-            // Redirect to dashboard if user is already logged in
-            router.push('/dashboard');
-          } else {
+      .then(response => {
+        if (response.success) {
+          setUser(response.data.user);
+          // Always redirect to home page, not dashboard
+          router.push('/');
+        } else {
             // API returned unsuccessful response
             console.warn('Profile fetch unsuccessful:', response.message);
             tokenManager.removeToken();
@@ -82,8 +82,8 @@ const AuthApp = ({ initialMode = 'signup' }) => {
         tokenManager.setToken(response.data.token);
         setUser(response.data.user);
         
-        // Redirect to dashboard after successful auth
-        router.push('/dashboard');
+        // Always redirect to home page after successful auth
+        router.push('/');
       } else {
         // Handle unsuccessful response
         setError({ 
@@ -186,12 +186,6 @@ const AuthApp = ({ initialMode = 'signup' }) => {
       router.push('/auth/signup');
     }
   };
-
-  // If user is logged in, redirect to dashboard
-  if (user) {
-    router.push('/dashboard');
-    return null; // Return null while redirecting
-  }
 
   return (
     <div className="min-h-screen bg-white">
