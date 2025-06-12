@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import { generateToken, loginSchema, signupSchema, validatePasswordStrength } from "../utils/auth.utils";
 import { PrismaClient, UserRole } from "../generated/prisma";
 import bcrypt from "bcryptjs";
-import z from "zod";
+import { z } from "zod";
 import { AuthenticatedRequest, JWTPayload } from "../types/auth.types";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
@@ -102,7 +102,7 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
         }
       });
   
-    } catch (error) {
+    } catch (error: any) {
       console.error('Signup error:', error);
       
       if (error instanceof z.ZodError) {
@@ -124,7 +124,7 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
       }
   
       // Handle Prisma-specific errors
-      if (error.code === 'P2002') {
+      if (error?.code === 'P2002') {
         res.status(409).json({
           success: false,
           message: 'User with this email already exists',
@@ -134,7 +134,7 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
       }
   
       // Handle database connection errors
-      if (error.code === 'P1001') {
+      if (error?.code === 'P1001') {
         res.status(503).json({
           success: false,
           message: 'Database connection failed. Please try again later.',
@@ -224,7 +224,7 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
         }
       });
   
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login error:', error);
       
       if (error instanceof z.ZodError) {
@@ -245,7 +245,7 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
       }
   
       // Handle database connection errors
-      if (error.code === 'P1001') {
+      if (error?.code === 'P1001') {
         res.status(503).json({
           success: false,
           message: 'Database connection failed. Please try again later.',
@@ -290,11 +290,11 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
         }
         
         decoded = jwt.verify(token, secret) as JWTPayload;
-      } catch (jwtError) {
+      } catch (jwtError: any) {
         let message = 'Invalid token';
-        if (jwtError.name === 'TokenExpiredError') {
+        if (jwtError?.name === 'TokenExpiredError') {
           message = 'Token has expired';
-        } else if (jwtError.name === 'JsonWebTokenError') {
+        } else if (jwtError?.name === 'JsonWebTokenError') {
           message = 'Invalid token format';
         }
         
@@ -338,11 +338,11 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
         data: { user }
       });
   
-    } catch (error) {
+    } catch (error: any) {
       console.error('Auth verification error:', error);
       
       // Handle database connection errors
-      if (error.code === 'P1001') {
+      if (error?.code === 'P1001') {
         res.status(503).json({
           success: false,
           message: 'Database connection failed. Please try again later.',

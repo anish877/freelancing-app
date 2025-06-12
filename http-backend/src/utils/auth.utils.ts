@@ -1,6 +1,6 @@
 // In auth.utils.ts - Replace the existing functions with these improved versions
 
-import z from "zod";
+import { z } from "zod";
 import jwt from 'jsonwebtoken';
 import { UserRole } from "../generated/prisma";
 import { PasswordValidation } from "../types/auth.types";
@@ -139,14 +139,14 @@ export const validateToken = (token: string): { isValid: boolean; payload?: any;
 
     const payload = jwt.verify(token, secret);
     return { isValid: true, payload };
-  } catch (error) {
+  } catch (error: any) {
     let errorMessage = 'Invalid token';
     
-    if (error.name === 'TokenExpiredError') {
+    if (error?.name === 'TokenExpiredError') {
       errorMessage = 'Token has expired';
-    } else if (error.name === 'JsonWebTokenError') {
+    } else if (error?.name === 'JsonWebTokenError') {
       errorMessage = 'Invalid token format';
-    } else if (error.name === 'NotBeforeError') {
+    } else if (error?.name === 'NotBeforeError') {
       errorMessage = 'Token not active yet';
     }
     

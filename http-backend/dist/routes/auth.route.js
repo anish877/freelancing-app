@@ -11,8 +11,6 @@ const router = express_1.default.Router();
 router.post('/signup', (req, res) => { (0, auth_controller_1.signup)(req, res); });
 // POST /api/auth/login
 router.post('/login', (req, res) => { (0, auth_controller_1.login)(req, res); });
-// POST /api/auth/logout
-router.post('/logout', (req, res) => { (0, auth_controller_1.logout)(req, res); });
 // GET /api/auth/me - Get current user info
 router.get('/me', auth_middleware_1.authenticateToken, (req, res) => (0, auth_controller_1.me)(req, res));
 exports.default = router;

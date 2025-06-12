@@ -23,13 +23,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.me = exports.logout = exports.login = exports.signup = void 0;
+exports.me = exports.login = exports.signup = void 0;
 const auth_utils_1 = require("../utils/auth.utils");
 const prisma_1 = require("../generated/prisma");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
-const zod_1 = __importDefault(require("zod"));
+const zod_1 = require("zod");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const prisma = new prisma_1.PrismaClient();
+// In auth.controller.ts - Replace the existing functions with these improved versions
 const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Validate request body
@@ -41,7 +42,8 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             res.status(400).json({
                 success: false,
                 message: 'Password does not meet security requirements',
-                passwordChecks: passwordValidation.checks
+                passwordChecks: passwordValidation.checks,
+                type: 'validation'
             });
             return;
         }
@@ -52,7 +54,8 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (existingUser) {
             res.status(409).json({
                 success: false,
-                message: 'User with this email already exists'
+                message: 'User with this email already exists',
+                type: 'conflict'
             });
             return;
         }
@@ -97,17 +100,45 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         console.error('Signup error:', error);
-        if (error instanceof zod_1.default.ZodError) {
+        if (error instanceof zod_1.z.ZodError) {
+            // Extract field-specific errors
+            const fieldErrors = error.errors.reduce((acc, err) => {
+                const field = err.path[0];
+                if (!acc[field])
+                    acc[field] = [];
+                acc[field].push(err.message);
+                return acc;
+            }, {});
             res.status(400).json({
                 success: false,
                 message: 'Validation failed',
-                errors: error
+                errors: fieldErrors,
+                type: 'validation'
+            });
+            return;
+        }
+        // Handle Prisma-specific errors
+        if ((error === null || error === void 0 ? void 0 : error.code) === 'P2002') {
+            res.status(409).json({
+                success: false,
+                message: 'User with this email already exists',
+                type: 'conflict'
+            });
+            return;
+        }
+        // Handle database connection errors
+        if ((error === null || error === void 0 ? void 0 : error.code) === 'P1001') {
+            res.status(503).json({
+                success: false,
+                message: 'Database connection failed. Please try again later.',
+                type: 'database'
             });
             return;
         }
         res.status(500).json({
             success: false,
-            message: 'Internal server error'
+            message: 'Internal server error',
+            type: 'server'
         });
     }
 });
@@ -125,7 +156,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 name: true,
                 email: true,
                 role: true,
-                password: true, // This field needs to be added to your schema
+                password: true,
                 createdAt: true,
                 avatar: true,
                 bio: true,
@@ -139,16 +170,30 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!user) {
             res.status(401).json({
                 success: false,
-                message: 'Invalid email or password'
+                message: 'Invalid email or password',
+                type: 'authentication'
             });
             return;
         }
         // Verify password
-        const isPasswordValid = yield bcryptjs_1.default.compare(password, user.password);
+        let isPasswordValid = false;
+        try {
+            isPasswordValid = yield bcryptjs_1.default.compare(password, user.password);
+        }
+        catch (bcryptError) {
+            console.error('Password verification error:', bcryptError);
+            res.status(500).json({
+                success: false,
+                message: 'Authentication system error',
+                type: 'server'
+            });
+            return;
+        }
         if (!isPasswordValid) {
             res.status(401).json({
                 success: false,
-                message: 'Invalid email or password'
+                message: 'Invalid email or password',
+                type: 'authentication'
             });
             return;
         }
@@ -167,30 +212,39 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         console.error('Login error:', error);
-        if (error instanceof zod_1.default.ZodError) {
+        if (error instanceof zod_1.z.ZodError) {
+            const fieldErrors = error.errors.reduce((acc, err) => {
+                const field = err.path[0];
+                if (!acc[field])
+                    acc[field] = [];
+                acc[field].push(err.message);
+                return acc;
+            }, {});
             res.status(400).json({
                 success: false,
                 message: 'Validation failed',
-                errors: error.errors
+                errors: fieldErrors,
+                type: 'validation'
+            });
+            return;
+        }
+        // Handle database connection errors
+        if ((error === null || error === void 0 ? void 0 : error.code) === 'P1001') {
+            res.status(503).json({
+                success: false,
+                message: 'Database connection failed. Please try again later.',
+                type: 'database'
             });
             return;
         }
         res.status(500).json({
             success: false,
-            message: 'Internal server error'
+            message: 'Internal server error',
+            type: 'server'
         });
     }
 });
 exports.login = login;
-const logout = (req, res) => {
-    // Since we're using JWT, logout is handled client-side by removing the token
-    // But we can still provide an endpoint for consistency
-    res.status(200).json({
-        success: true,
-        message: 'Logged out successfully'
-    });
-};
-exports.logout = logout;
 const me = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const authHeader = req.headers.authorization;
@@ -198,18 +252,37 @@ const me = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!token) {
             res.status(401).json({
                 success: false,
-                message: 'No token provided'
+                message: 'No token provided',
+                type: 'authentication'
             });
             return;
         }
         let decoded;
         try {
-            decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+            const secret = process.env.JWT_SECRET;
+            if (!secret) {
+                console.error('JWT_SECRET environment variable is not set');
+                res.status(500).json({
+                    success: false,
+                    message: 'Authentication system configuration error',
+                    type: 'server'
+                });
+                return;
+            }
+            decoded = jsonwebtoken_1.default.verify(token, secret);
         }
         catch (jwtError) {
+            let message = 'Invalid token';
+            if ((jwtError === null || jwtError === void 0 ? void 0 : jwtError.name) === 'TokenExpiredError') {
+                message = 'Token has expired';
+            }
+            else if ((jwtError === null || jwtError === void 0 ? void 0 : jwtError.name) === 'JsonWebTokenError') {
+                message = 'Invalid token format';
+            }
             res.status(401).json({
                 success: false,
-                message: 'Invalid token'
+                message,
+                type: 'authentication'
             });
             return;
         }
@@ -233,7 +306,8 @@ const me = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!user) {
             res.status(404).json({
                 success: false,
-                message: 'User not found'
+                message: 'User not found',
+                type: 'not_found'
             });
             return;
         }
@@ -244,9 +318,19 @@ const me = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         console.error('Auth verification error:', error);
+        // Handle database connection errors
+        if ((error === null || error === void 0 ? void 0 : error.code) === 'P1001') {
+            res.status(503).json({
+                success: false,
+                message: 'Database connection failed. Please try again later.',
+                type: 'database'
+            });
+            return;
+        }
         res.status(500).json({
             success: false,
-            message: 'Internal server error'
+            message: 'Internal server error',
+            type: 'server'
         });
     }
 });
