@@ -9,8 +9,32 @@ import { rateLimit } from 'express-rate-limit';
 dotenv.config();
 
 // Import routes
-import authRoutes from './routes/auth';
-import roomRoutes from './routes/rooms';
+import authRoutes from './routes/auth.route';
+// import roomRoutes from './routes/rooms';
+import { PrismaClient } from "./generated/prisma"; // FIXED path
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
+
+const prisma = globalForPrisma.prisma ?? new PrismaClient({
+  log: ['query', 'info', 'warn', 'error'],
+});
+
+async function connectToDatabase() {
+  try {
+    await prisma.$connect();
+    console.log("✅ Database connection established");
+  } catch (err) {
+    console.error("❌ Failed to connect to database:", err);
+  }
+}
+
+if (!globalForPrisma.prisma) {
+  connectToDatabase();
+}
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 const app = express();
 
@@ -29,7 +53,7 @@ app.use(limiter); // Apply rate limiting
 
 // Configure CORS
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000', // Frontend URL
+  origin: process.env.CORS_ORIGIN || 'http://localhost:3001', // Frontend URL
   credentials: true, // Allow cookies with CORS
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -42,7 +66,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // API routes
 app.use('/api/auth', authRoutes);
-app.use('/api/rooms', roomRoutes);
+// app.use('/api/rooms', roomRoutes);
 
 // Health check route
 app.get('/health', (req, res) => {
@@ -102,7 +126,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`⚡️ HTTP server running on port ${PORT}`);

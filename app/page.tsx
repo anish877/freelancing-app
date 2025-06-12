@@ -22,7 +22,7 @@ export default function Home() {
   };
 
   if (showAuth) {
-    return <AuthApp initialMode={authMode} onBack={() => setShowAuth(false)} />;
+    return <AuthApp initialMode={authMode} />;
   }
   return (
     <div className="min-h-screen flex flex-col">
