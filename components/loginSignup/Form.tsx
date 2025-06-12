@@ -1,18 +1,51 @@
-// In AuthForm.tsx - Replace the existing component with this improved version
 
 import { AlertCircle, ArrowRight, Check } from "lucide-react";
 import { useState } from "react";
 
-const AuthForm = ({ signup, onSubmit, isClient, loading, error, onError }) => {
-  const [formData, setFormData] = useState({
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+}
+
+interface FieldErrors {
+  [key: string]: string | undefined;
+}
+
+interface ErrorType {
+  message: string;
+  type: 'error' | 'server' | 'database' | 'validation' | 'authentication';
+  errors?: {
+    [key: string]: string[];
+  };
+}
+
+interface AuthFormProps {
+  signup: boolean;
+  onSubmit: (data: FormData & { role: string }) => Promise<void>;
+  isClient: boolean;
+  loading: boolean;
+  error: ErrorType | string | null;
+  onError?: (error: ErrorType) => void;
+}
+
+const AuthForm: React.FC<AuthFormProps> = ({ 
+  signup, 
+  onSubmit, 
+  isClient, 
+  loading, 
+  error, 
+  onError 
+}) => {
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     password: ''
   });
 
-  const [fieldErrors, setFieldErrors] = useState({});
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -28,11 +61,17 @@ const AuthForm = ({ signup, onSubmit, isClient, loading, error, onError }) => {
     }
   };
 
-  const getInputClassName = (fieldName) => {
+  const getInputClassName = (fieldName: string): string => {
     const baseClasses = "w-full h-12 border rounded-xl px-4 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 disabled:bg-gray-50 disabled:cursor-not-allowed";
     
     // Check for field-specific errors from both client and server
-    const hasError = fieldErrors[fieldName] || (error && error.errors && error.errors[fieldName]);
+    const hasError = fieldErrors[fieldName] || (
+      typeof error === 'object' && 
+      error !== null && 
+      'errors' in error && 
+      error.errors && 
+      error.errors[fieldName]
+    );
     
     if (hasError) {
       return `${baseClasses} border-red-300 focus:ring-red-500`;
@@ -41,8 +80,8 @@ const AuthForm = ({ signup, onSubmit, isClient, loading, error, onError }) => {
     return `${baseClasses} border-gray-200 focus:ring-black`;
   };
 
-  const validateForm = () => {
-    const errors = {};
+  const validateForm = (): FieldErrors => {
+    const errors: FieldErrors = {};
     
     // Name validation for signup
     if (signup && !formData.name.trim()) {
@@ -73,7 +112,7 @@ const AuthForm = ({ signup, onSubmit, isClient, loading, error, onError }) => {
     return errors;
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (): Promise<void> => {
     try {
       // Clear previous errors
       setFieldErrors({});
@@ -85,7 +124,7 @@ const AuthForm = ({ signup, onSubmit, isClient, loading, error, onError }) => {
         setFieldErrors(validationErrors);
         
         // Show general error message
-        const errorMessages = Object.values(validationErrors);
+        const errorMessages = Object.values(validationErrors).filter(Boolean) as string[];
         onError && onError({ 
           message: errorMessages.join('. '), 
           type: 'validation' 
@@ -110,16 +149,19 @@ const AuthForm = ({ signup, onSubmit, isClient, loading, error, onError }) => {
   };
 
   // Password strength validation
-  const validatePassword = (password) => {
+  const validatePassword = (password: string) => {
     const checks = {
       length: password.length >= 8,
       hasNumber: /\d/.test(password),
       hasSymbol: /[!@#$%^&*(),.?":{}|<>]/.test(password),
-      noPersonalInfo: !formData.name || (!password.toLowerCase().includes(formData.name.toLowerCase()) && !password.toLowerCase().includes(formData.email.toLowerCase()))
+      noPersonalInfo: !formData.name || (
+        !password.toLowerCase().includes(formData.name.toLowerCase()) && 
+        !password.toLowerCase().includes(formData.email.toLowerCase())
+      )
     };
     
     const score = Object.values(checks).filter(Boolean).length;
-    let strength = 'Weak';
+    let strength: 'Weak' | 'Medium' | 'Strong' = 'Weak';
     if (score >= 3) strength = 'Medium';
     if (score === 4) strength = 'Strong';
     
@@ -128,32 +170,57 @@ const AuthForm = ({ signup, onSubmit, isClient, loading, error, onError }) => {
 
   const passwordValidation = signup ? validatePassword(formData.password) : null;
 
+  // Helper function to safely get error message
+  const getErrorMessage = (error: ErrorType | string | null): string => {
+    if (!error) return '';
+    return typeof error === 'string' ? error : error.message;
+  };
+
+  // Helper function to safely get error type
+  const getErrorType = (error: ErrorType | string | null): string => {
+    if (!error || typeof error === 'string') return 'error';
+    return error.type;
+  };
+
+  // Helper function to safely get field errors
+  const getFieldError = (fieldName: string): string | undefined => {
+    const clientError = fieldErrors[fieldName];
+    if (clientError) return clientError;
+    
+    if (typeof error === 'object' && error !== null && 'errors' in error && error.errors) {
+      const serverError = error.errors[fieldName];
+      return serverError ? serverError[0] : undefined;
+    }
+    
+    return undefined;
+  };
+
   return (
     <div className="w-full max-w-md flex flex-col gap-6">
       {/* General Error Display */}
       {error && (
         <div className={`border rounded-xl p-4 flex items-center gap-3 ${
-          error.type === 'error' || error.type === 'server' || error.type === 'database'
+          getErrorType(error) === 'error' || getErrorType(error) === 'server' || getErrorType(error) === 'database'
             ? 'bg-red-50 border-red-200' 
-            : error.type === 'validation' || error.type === 'authentication'
+            : getErrorType(error) === 'validation' || getErrorType(error) === 'authentication'
             ? 'bg-yellow-50 border-yellow-200'
             : 'bg-blue-50 border-blue-200'
         }`}>
           <AlertCircle className={`w-5 h-5 flex-shrink-0 ${
-            error.type === 'error' || error.type === 'server' || error.type === 'database'
+            getErrorType(error) === 'error' || getErrorType(error) === 'server' || getErrorType(error) === 'database'
               ? 'text-red-500' 
-              : error.type === 'validation' || error.type === 'authentication'
+              : getErrorType(error) === 'validation' || getErrorType(error) === 'authentication'
               ? 'text-yellow-500'
               : 'text-blue-500'
           }`} />
           <p className={`text-sm ${
-            error.type === 'error' || error.type === 'server' || error.type === 'database'
+            getErrorType(error) === 'error' || getErrorType(error) === 'server' || getErrorType(error) === 'database'
               ? 'text-red-700' 
-              : error.type === 'validation' || error.type === 'authentication'
+              : getErrorType(error) === 'validation' || getErrorType(error) === 'authentication'
               ? 'text-yellow-700'
               : 'text-blue-700'
           }`}>
-            {typeof error === 'string' ? error : error.message}
+            {getErrorMessage(error)}
           </p>
         </div>
       )}
@@ -176,10 +243,10 @@ const AuthForm = ({ signup, onSubmit, isClient, loading, error, onError }) => {
             placeholder="Enter your full name"
           />
           {/* Field-specific error */}
-          {(fieldErrors.name || (error?.errors?.name)) && (
+          {getFieldError('name') && (
             <p className="text-sm text-red-600 flex items-center gap-1">
               <AlertCircle className="w-4 h-4" />
-              {fieldErrors.name || error.errors.name[0]}
+              {getFieldError('name')}
             </p>
           )}
         </div>
@@ -202,10 +269,10 @@ const AuthForm = ({ signup, onSubmit, isClient, loading, error, onError }) => {
           placeholder="Enter your email"
         />
         {/* Field-specific error */}
-        {(fieldErrors.email || (error?.errors?.email)) && (
+        {getFieldError('email') && (
           <p className="text-sm text-red-600 flex items-center gap-1">
             <AlertCircle className="w-4 h-4" />
-            {fieldErrors.email || error.errors.email[0]}
+            {getFieldError('email')}
           </p>
         )}
       </div>
@@ -235,10 +302,10 @@ const AuthForm = ({ signup, onSubmit, isClient, loading, error, onError }) => {
         />
         
         {/* Field-specific error */}
-        {(fieldErrors.password || (error?.errors?.password)) && (
+        {getFieldError('password') && (
           <p className="text-sm text-red-600 flex items-center gap-1">
             <AlertCircle className="w-4 h-4" />
-            {fieldErrors.password || error.errors.password[0]}
+            {getFieldError('password')}
           </p>
         )}
         

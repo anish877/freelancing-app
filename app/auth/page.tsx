@@ -3,7 +3,7 @@ import RoleSelector from "@/components/loginSignup/Current";
 import AuthForm from "@/components/loginSignup/Form";
 import { apiService } from "@/service/apiService";
 import { tokenManager } from "@/service/tokenService";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 
 const AuthApp = ({ initialMode = 'signup' }) => {
   const [isClient, setIsClient] = useState(true);
@@ -54,7 +54,7 @@ const AuthApp = ({ initialMode = 'signup' }) => {
     }
   }, []);
 
-  const handleSubmit = async (formData) => {
+  const handleSubmit = async (formData: { email: any; password: any; }) => {
     setLoading(true);
     setError(null);
 
@@ -164,7 +164,7 @@ const AuthApp = ({ initialMode = 'signup' }) => {
     }
   };
 
-  const handleViewChange = (newView) => {
+  const handleViewChange = (newView: SetStateAction<string>) => {
     setCurrentView(newView);
     clearError();
   };
