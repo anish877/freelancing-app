@@ -12,4 +12,5 @@ export default function AuthPage() {
   const mode = searchParams.get('mode') || 'signup'
   
   return <AuthApp initialMode={mode} />
+
 }
