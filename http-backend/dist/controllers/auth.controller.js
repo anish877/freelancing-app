@@ -48,9 +48,11 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return;
         }
         // Check if user already exists
+        console.log("HI");
         const existingUser = yield prisma.user.findUnique({
             where: { email }
         });
+        console.log("User: ", existingUser);
         if (existingUser) {
             res.status(409).json({
                 success: false,

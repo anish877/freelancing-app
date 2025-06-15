@@ -64,6 +64,7 @@ const AuthApp = ({ initialMode = 'signup' }) => {
     setLoading(true);
     setError(null);
 
+
     try {
       let response;
       

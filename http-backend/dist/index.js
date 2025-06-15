@@ -59,7 +59,7 @@ app.use((0, cookie_parser_1.default)()); // Parse cookies
 app.use(limiter); // Apply rate limiting
 // Configure CORS
 app.use((0, cors_1.default)({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3001', // Frontend URL
+    origin: process.env.CORS_ORIGIN || 'http://localhost:3000', // Frontend URL
     credentials: true, // Allow cookies with CORS
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -122,7 +122,7 @@ app.use((err, req, res, next) => {
     });
 });
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`⚡️ HTTP server running on port ${PORT}`);
     console.log(`WebSocket server should be started separately`);
