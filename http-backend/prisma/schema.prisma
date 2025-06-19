@@ -22,12 +22,70 @@ enum UserRole {
   ADMIN
 }
 
+enum NotificationType {
+  MESSAGE
+  SYSTEM
+  ALERT
+  JOB
+  REVIEW
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum DisputeStatus {
+  PENDING
+  UNDER_REVIEW
+  RESOLVED
+  REJECTED
+}
+
+enum ReportStatus {
+  PENDING
+  UNDER_REVIEW
+  ACTION_TAKEN
+  DISMISSED
+}
+
+enum ProposalStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum ContractStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+  DISPUTED
+}
+
 enum DeveloperType {
   FRONTEND
   BACKEND
   FULLSTACK
   OTHER
 }
+
+enum SkillLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+
+enum WithdrawalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  COMPLETED
+}
+
 
 enum PaymentPlan {
   PLAN_1 // $7.99/hr + 5% equity
@@ -42,42 +100,470 @@ enum ProjectStatus {
   CANCELLED
 }
 
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+
 enum MessageType {
   TEXT
   FILE
   SYSTEM
 }
 
+enum UserStatus {
+  PENDING
+  COMPLETED
+}
+
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String
-  password  String
-  avatar    String?
-  role      UserRole
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Client specific fields
-  companyName String?
-  stripeCustomerId String?
-
-  // Freelancer specific fields
-  bio             String?
-  developerType   DeveloperType?
-  isVetted        Boolean @default(false)
-  hourlyRate      Float?
-  portfolioUrl    String?
-
-  // Relations
-  clientProjects   Project[] @relation("ClientProjects")
+  id                String     @id @default(cuid())
+  email             String     @unique
+  username          String?    @unique
+  firstName         String
+  lastName          String
+  avatar            String?
+  role              UserRole
+  status            UserStatus @default(PENDING)
+  isEmailVerified   Boolean    @default(false)
+  isPhoneVerified   Boolean    @default(false)
+  phone             String?
+  timezone          String?
+  language          String     @default("en")
+  
+  // Authentication & Security
+  passwordHash      String
+  emailVerificationToken String?
+  phoneVerificationCode  String?
+  resetPasswordToken     String?
+  resetPasswordExpires   DateTime?
+  twoFactorEnabled       Boolean @default(false)
+  twoFactorSecret        String?
+  
+  // Profile & Preferences
+  bio               String?
+  website           String?
+  
+  // Location
+  country           String?
+  city              String?
+  address           String?
+  postalCode        String?
+  
+  // Platform Statistics
+  totalEarned       Float      @default(0)
+  totalSpent        Float      @default(0)
+  successRate       Float      @default(0)
+  responseTime      Int?       // Average response time in minutes
+  lastActiveAt      DateTime?
+  
+  // Timestamps
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  
+  // Profile Relations
+  freelancerProfile FreelancerProfile?
+  clientProfile     ClientProfile?
+  timeEntries       TimeEntry[]
+  
+  // Project Relations
   freelancerProjects Project[] @relation("FreelancerProjects")
-  timeEntries      TimeEntry[]
-  messages         Message[]
-  ndaTemplates     NDATemplate[]
+  clientProjects    Project[] @relation("ClientProjects")
+  proposals         Proposal[]
+  
+  // Communication
+  sentMessages       Message[] @relation("messageSender")
+  notifications     Notification[]
+  
+  // Financial
+  payments          Payment[]
+  paymentMethods    PaymentMethod[]
+  earnings          Earning[]
+  withdrawals       Withdrawal[]
+  
+  // Reviews & Ratings
+  givenReviews      Review[] @relation("ReviewGiver")
+  receivedReviews   Review[] @relation("ReviewReceiver")
+  
+  // Support & Disputes
+  supportTickets    SupportTicket[]
+  
+
+  // contract
+  clientContracts   Contract[] @relation("ClientContracts")
+  freelancerContracts Contract[] @relation("FreelancerContracts")
 
   @@map("users")
+  @@index([email])
+  @@index([status])
+  @@index([role])
+  @@index([createdAt])
 }
+
+
+model Payment {
+  id          String   @id @default(cuid())
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  amount      Float
+  currency    String   @default("USD")
+  status      PaymentStatus
+  method      String?  // e.g., "Credit Card", "PayPal"
+
+  referenceId String?  // ID from external payment provider
+  paidAt      DateTime?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("payments")
+  @@index([userId])
+}
+
+
+model Conversation {
+  id             String                   @id @default(cuid())
+  topic          String?
+  createdAt      DateTime                 @default(now())
+  updatedAt      DateTime                 @updatedAt
+
+  messages       Message[]
+
+  @@map("conversations")
+}
+
+model FreelancerProfile {
+  id                String      @id @default(cuid())
+  userId            String      @unique
+  user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Professional Information
+  title             String?     // Professional title
+  overview          String?     // Professional overview
+  hourlyRate        Float?
+  availability      String?     // Full-time, Part-time, etc.
+  experienceLevel   SkillLevel?
+  
+  // Portfolio & Work Samples
+  portfolioItems    PortfolioItem[]
+  
+  // Skills & Expertise
+  skills            FreelancerSkill[]
+  categories        FreelancerCategory[]
+  certifications    Certification[]
+  educations        Education[]
+  workExperiences   WorkExperience[]
+  
+  // Platform Metrics
+  jobSuccessScore   Float?      @default(0)
+  totalJobs         Int         @default(0)
+  totalHours        Float       @default(0)
+  repeatClients     Int         @default(0)
+  
+  // Availability & Settings
+  isAvailable       Boolean     @default(true)
+  maxActiveProjects Int         @default(5)
+  
+  // Verification & Trust
+  isVerified        Boolean     @default(false)
+  isTopRated        Boolean     @default(false)
+  isPlusFreelancer  Boolean     @default(false)
+  
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  @@map("freelancer_profiles")
+  @@index([isAvailable])
+  @@index([hourlyRate])
+  @@index([jobSuccessScore])
+}
+
+model Withdrawal {
+  id          String   @id @default(cuid())
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  amount      Float
+  status      WithdrawalStatus
+  method      String?     // e.g., "Bank Transfer", "UPI"
+  requestedAt DateTime    @default(now())
+  processedAt DateTime?
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("withdrawals")
+  @@index([userId])
+}
+
+model Earning {
+  id          String   @id @default(cuid())
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  amount      Float
+  source      String    // e.g., "Contract #123"
+  description String?
+  earnedAt    DateTime  @default(now())
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("earnings")
+  @@index([userId])
+}
+
+
+model PaymentMethod {
+  id          String   @id @default(cuid())
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  type        String    // e.g., "Card", "Bank", "UPI"
+  last4       String?   // Last 4 digits for card
+  provider    String?   // e.g., "Visa", "MasterCard", "Stripe"
+  isDefault   Boolean   @default(false)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("payment_methods")
+  @@index([userId])
+}
+
+model ClientProfile {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Company Information
+  companyName       String?
+  companySize       String?  // 1-10, 11-50, 51-200, etc.
+  industry          String?
+  companyWebsite    String?
+  companyDescription String?
+  
+  // Billing Information
+  billingAddress    String?
+  taxId             String?
+  
+  // Platform Metrics
+  totalProjectsPosted Int    @default(0)
+  totalAmountSpent    Float  @default(0)
+  avgProjectBudget    Float?
+  
+  // Verification
+  isPaymentVerified   Boolean @default(false)
+  isPhoneVerified     Boolean @default(false)
+  
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("client_profiles")
+}
+
+
+model Skill {
+  id               String            @id @default(cuid())
+  name             String            @unique
+  category         String
+  description      String?
+  isActive         Boolean           @default(true)
+  
+  // Relations
+  freelancerSkills FreelancerSkill[]
+  projectSkills    ProjectSkill[]
+  
+  createdAt        DateTime          @default(now())
+
+  @@map("skills")
+  @@index([category])
+  @@index([isActive])
+}
+
+
+model ProjectSkill {
+  id           String      @id @default(cuid())
+  projectId    String
+  project      Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  skillId      String
+  skill        Skill       @relation(fields: [skillId], references: [id])
+  level        SkillLevel
+  yearsOfExp   Int?
+
+  @@map("project_skills")
+  @@unique([projectId, skillId])
+}
+
+
+model FreelancerSkill {
+  id           String      @id @default(cuid())
+  freelancerId String
+  freelancer   FreelancerProfile @relation(fields: [freelancerId], references: [id], onDelete: Cascade)
+  skillId      String
+  skill        Skill       @relation(fields: [skillId], references: [id])
+  level        SkillLevel
+  yearsOfExp   Int?
+
+  @@map("freelancer_skills")
+  @@unique([freelancerId, skillId])
+}
+
+
+model Category {
+  id                  String               @id @default(cuid())
+  name                String               @unique
+  description         String?
+  parentId            String?
+  parent              Category?            @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children            Category[]           @relation("CategoryHierarchy")
+  isActive            Boolean              @default(true)
+  
+  // Relations
+  freelancerCategories FreelancerCategory[]
+  projects            Project[]
+  
+  createdAt           DateTime             @default(now())
+
+  @@map("categories")
+  @@index([isActive])
+  @@index([parentId])
+}
+
+model FreelancerCategory {
+  id           String            @id @default(cuid())
+  freelancerId String
+  freelancer   FreelancerProfile @relation(fields: [freelancerId], references: [id], onDelete: Cascade)
+  categoryId   String
+  category     Category          @relation(fields: [categoryId], references: [id])
+
+  @@map("freelancer_categories")
+  @@unique([freelancerId, categoryId])
+}
+
+model PortfolioItem {
+  id             String            @id @default(cuid())
+  freelancerId   String
+  freelancer     FreelancerProfile @relation(fields: [freelancerId], references: [id], onDelete: Cascade)
+  
+  title          String
+  description    String?
+  imageUrl       String?
+  projectUrl     String?
+  technologies   String[]          // Array of technologies used
+  completedAt    DateTime?
+  
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  @@map("portfolio_items")
+}
+
+model Review {
+  id          String   @id @default(cuid())
+
+  giverId     String
+  giver       User     @relation("ReviewGiver", fields: [giverId], references: [id])
+
+  receiverId  String
+  receiver    User     @relation("ReviewReceiver", fields: [receiverId], references: [id])
+
+  rating      Int      // e.g., 1–5
+  feedback    String?
+  projectId   String?  // Optional: link to project reviewed
+  createdAt   DateTime @default(now())
+
+  @@map("reviews")
+  @@index([giverId])
+  @@index([receiverId])
+}
+
+
+model SupportTicket {
+  id          String   @id @default(cuid())
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  subject     String
+  description String
+  status      TicketStatus @default(OPEN)
+  priority    TicketPriority @default(NORMAL)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("support_tickets")
+  @@index([userId])
+}
+
+model Certification {
+  id             String            @id @default(cuid())
+  freelancerId   String
+  freelancer     FreelancerProfile @relation(fields: [freelancerId], references: [id], onDelete: Cascade)
+  
+  name           String
+  issuingOrg     String
+  issueDate      DateTime
+  expiryDate     DateTime?
+  credentialId   String?
+  credentialUrl  String?
+  
+  createdAt      DateTime          @default(now())
+
+  @@map("certifications")
+}
+
+model Education {
+  id             String            @id @default(cuid())
+  freelancerId   String
+  freelancer     FreelancerProfile @relation(fields: [freelancerId], references: [id], onDelete: Cascade)
+  
+  institution    String
+  degree         String
+  fieldOfStudy   String?
+  startDate      DateTime
+  endDate        DateTime?
+  description    String?
+  
+  createdAt      DateTime          @default(now())
+
+  @@map("education")
+}
+
+
+model WorkExperience {
+  id             String            @id @default(cuid())
+  freelancerId   String
+  freelancer     FreelancerProfile @relation(fields: [freelancerId], references: [id], onDelete: Cascade)
+  
+  company        String
+  position       String
+  startDate      DateTime
+  endDate        DateTime?
+  description    String?
+  isCurrentJob   Boolean           @default(false)
+  
+  createdAt      DateTime          @default(now())
+
+  @@map("work_experiences")
+}
+
 
 model Project {
   id          String        @id @default(cuid())
@@ -90,18 +576,29 @@ model Project {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
 
-  // Relations
+  // CLIENT RELATIONSHIP - who posted the project
   clientId     String
   client       User   @relation("ClientProjects", fields: [clientId], references: [id])
+  
+  // FREELANCER RELATIONSHIP - who is working on the project
   freelancerId String?
   freelancer   User?  @relation("FreelancerProjects", fields: [freelancerId], references: [id])
+  
 
+  // Other relations
+  categoryId   String?
+  category     Category? @relation(fields: [categoryId], references: [id])
+  skills       ProjectSkill[]
+  contracts    Contract[]
   timeEntries  TimeEntry[]
   messages     Message[]
   milestones   Milestone[]
-  ndaTemplate  NDATemplate?
+  proposals    Proposal[]
 
   @@map("projects")
+  @@index([clientId])
+  @@index([freelancerId])
+  @@index([status])
 }
 
 model TimeEntry {
@@ -133,7 +630,9 @@ model Message {
   projectId String
   project   Project @relation(fields: [projectId], references: [id])
   senderId  String
-  sender    User    @relation(fields: [senderId], references: [id])
+  sender    User    @relation("messageSender", fields: [senderId], references: [id])
+  conversationId String?
+  conversation Conversation? @relation(fields: [conversationId], references: [id])
 
   @@map("messages")
 }
@@ -154,61 +653,65 @@ model Milestone {
   @@map("milestones")
 }
 
-model NDATemplate {
-  id        String   @id @default(cuid())
-  title     String
-  content   String
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
-  // Relations
-  clientId  String  @unique
-  client    User    @relation(fields: [clientId], references: [id])
-  projectId String? @unique
-  project   Project? @relation(fields: [projectId], references: [id])
+model Proposal {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
 
-  @@map("nda_templates")
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id])
+
+  coverLetter String
+  budget      Float
+  duration    Int       // in days
+  status      ProposalStatus @default(PENDING)
+
+  submittedAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("proposals")
+  @@index([userId])
+  @@index([projectId])
 }
 
-// For search functionality and AI assistance
-model SearchQuery {
-  id        String   @id @default(cuid())
-  query     String
-  results   Json?    // Store AI processed results
-  createdAt DateTime @default(now())
+model Contract {
+  id            String   @id @default(cuid())
+  clientId      String
+  client        User     @relation("ClientContracts", fields: [clientId], references: [id])
+  freelancerId  String
+  freelancer    User     @relation("FreelancerContracts", fields: [freelancerId], references: [id])
+  projectId     String
+  project       Project  @relation(fields: [projectId], references: [id])
+  startDate     DateTime
+  endDate       DateTime?
+  status        ContractStatus @default(ACTIVE)
+  amount        Float
 
-  @@map("search_queries")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("contracts")
+  @@index([clientId])
+  @@index([freelancerId])
+  @@index([projectId])
 }
 
-// For admin management of freelancers
-model FreelancerApplication {
-  id             String   @id @default(cuid())
-  email          String
-  name           String
-  bio            String
-  developerType  DeveloperType
-  portfolioUrl   String?
-  resumeUrl      String?
-  isApproved     Boolean  @default(false)
-  isRejected     Boolean  @default(false)
-  adminNotes     String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
 
-  @@map("freelancer_applications")
-}
+model Notification {
+  id          String   @id @default(cuid())
 
-// For tracking payment plans and rates
-model PaymentPlanConfig {
-  id               String      @id @default(cuid())
-  planType         PaymentPlan @unique
-  hourlyRate       Float
-  equityPercentage Float?
-  description      String
-  isActive         Boolean     @default(true)
-  createdAt        DateTime    @default(now())
-  updatedAt        DateTime    @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
 
-  @@map("payment_plan_configs")
+  type        NotificationType
+  title       String
+  message     String
+  read        Boolean   @default(false)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("notifications")
+  @@index([userId])
 }
